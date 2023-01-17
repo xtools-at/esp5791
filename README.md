@@ -1,18 +1,18 @@
 # ESP5791
 
-Physical Backed Tokens ((EIP-5791)[https://eips.ethereum.org/EIPS/eip-5791]) for everyone using ESP32 and BLE
+Physical Backed Tokens ([EIP-5791](https://eips.ethereum.org/EIPS/eip-5791)) for everyone using ESP32 and BLE
 
 ## Monorepo folder structure
 
 - `Arduino` contains the microcontroller firmware and tweaked libraries to be used with Arduino IDE
-- `hardhat` contains Solidity smart contracts implementing EIP-5791, based on the (PBT)[https://github.com/chiru-labs/PBT] project
+- `hardhat` contains Solidity smart contracts implementing EIP-5791, based on the [PBT](https://github.com/chiru-labs/PBT) project
 
 ## _Make_ a PBT - the hardware side
 
 ### Requirements
 
-- (Arduino IDE)[https://docs.arduino.cc/software/ide-v1] Desktop App
-- (esptool.py)[https://github.com/espressif/esptool]
+- [Arduino IDE](https://docs.arduino.cc/software/ide-v1) Desktop App
+- [esptool.py](https://github.com/espressif/esptool)
 - ESP32 Dev board + USB cable
 
 ### Arduino IDE: Setup
@@ -27,7 +27,7 @@ ln -s ~/path_to_repo/esp5791/Arduino/libraries/NimBLE-Arduino ~/Documents/Arduin
 ln -s ~/path_to_repo/esp5791/Arduino/ESP5791 ~/Documents/Arduino/ESP5791
 ```
 
-(Please use the libs included in the repo. You can find the original libs here for reference: (Web3E)[https://github.com/AlphaWallet/Web3E] / (NimBLE)[https://github.com/h2zero/NimBLE-Arduino])
+[Please use the libs included in the repo. You can find the original libs here for reference: [Web3E](https://github.com/AlphaWallet/Web3E) / [NimBLE)(https://github.com/h2zero/NimBLE-Arduino])
 
 ### Arduino IDE: Flash firmware
 
@@ -40,11 +40,11 @@ ln -s ~/path_to_repo/esp5791/Arduino/ESP5791 ~/Documents/Arduino/ESP5791
 
 !! Danger zone: this may brick your device !! changes done here are not reversible, thread carefully !!
 
-- Read (ESP32 eFuse basics)[https://blog.espressif.com/understanding-esp32s-security-features-14483e465724] first
-- Enable (Flash encryption)[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/flash-encryption.html].
-  - For ESP32v3 chips and newer, also disable (UART ROM download mode)[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/flash-encryption.html#enabling-uart-bootloader-encryption-decryption] here permanently
+- Read [ESP32 eFuse basics](https://blog.espressif.com/understanding-esp32s-security-features-14483e465724) first
+- Enable [Flash encryption](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/flash-encryption.html).
+  - For ESP32v3 chips and newer, also disable [UART ROM download mode](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/flash-encryption.html#enabling-uart-bootloader-encryption-decryption) here permanently
   - Be aware of the differences between _Development_ vs. _Release_ modes or you may brick your board
-- Enable (Secure Boot V2)[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/secure-boot-v2.html] (or (V1)[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/secure-boot-v1.html] on older chips). This also disables JTAG access
+- Enable [Secure Boot V2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/secure-boot-v2.html) (or [V1](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/secure-boot-v1.html) on older chips). This also disables JTAG access
 
 ## _Deploy_ your PBT - the smart contract
 
@@ -52,18 +52,18 @@ See the README in the `hardhat` directory.
 
 ## Thanks to
 
-- The authors of (EIP-5791)[https://eips.ethereum.org/EIPS/eip-5791]
-- (Chiru Labs)[https://github.com/chiru-labs] for the (PBT)[https://github.com/chiru-labs/PBT] smart contract reference implementation
-- (Espressif Systems)[https://github.com/espressif] for all the ESP tooling
-- (Firefly Wallet)[https://github.com/firefly/wallet] for the inspiration
-- (AlphaWallet)[https://github.com/AlphaWallet] for the (Web3E)[https://github.com/AlphaWallet/Web3E] ESP32 Ethereum lib (includes the (trezor-crypto)[https://github.com/trezor/trezor-firmware/tree/master/crypto] lib)
-- (Mbed TLS)[https://github.com/Mbed-TLS/mbedtls] (cryptographic lib for embedded systems)
-- (NimBLE)[https://github.com/h2zero/NimBLE-Arduino] (lightweight BLE lib for Arduino/ESP32)
+- The authors of [EIP-5791](https://eips.ethereum.org/EIPS/eip-5791)
+- [Chiru Labs](https://github.com/chiru-labs) for the [PBT](https://github.com/chiru-labs/PBT) smart contract reference implementation
+- [Espressif Systems](https://github.com/espressif) for all the ESP tooling
+- [Firefly Wallet](https://github.com/firefly/wallet) for the inspiration
+- [AlphaWallet](https://github.com/AlphaWallet) for the [Web3E](https://github.com/AlphaWallet/Web3E) ESP32 Ethereum lib (includes the [trezor-crypto](https://github.com/trezor/trezor-firmware/tree/master/crypto) lib)
+- [Mbed TLS](https://github.com/Mbed-TLS/mbedtls) (cryptographic lib for embedded systems)
+- [NimBLE](https://github.com/h2zero/NimBLE-Arduino) (lightweight BLE lib for Arduino/ESP32)
 
 ## License
 
 MIT
-Copyright © 2023 (@xtools-at)[https://github.com/xtools-at]
+Copyright © 2023 [@xtools-at](https://github.com/xtools-at)
 
 ## Disclaimer
 

@@ -1,7 +1,7 @@
 # ESP5791 Smart Contracts
 
-Ready-to-deploy PBT contract based on (Chiru Labs' PBT implementation)[https://github.com/chiru-labs/PBT] and
-(OpenZeppelin's ERC721 NFT contracts)[https://github.com/OpenZeppelin/openzeppelin-contracts].
+Ready-to-deploy PBT contract based on [Chiru Labs' PBT implementation](https://github.com/chiru-labs/PBT) and
+[OpenZeppelin's ERC721 NFT contracts](https://github.com/OpenZeppelin/openzeppelin-contracts).
 
 ## Quickstart
 
@@ -21,14 +21,14 @@ Ready-to-deploy PBT contract based on (Chiru Labs' PBT implementation)[https://g
 
 ## Notes
 
-Hardhat dev environment based on (PaulRBerg's Hardhat Template)[https://github.com/paulrberg/hardhat-template], refer to
+Hardhat dev environment based on [PaulRBerg's Hardhat Template](https://github.com/paulrberg/hardhat-template), refer to
 that repo for specific questions on how to use the tools.
 
 ## License
 
 MIT
 
-Copyright © 2023 (@xtools-at)[https://github.com/xtools-at]
+Copyright © 2023 [@xtools-at](https://github.com/xtools-at)
 
 ## Disclaimer
 
