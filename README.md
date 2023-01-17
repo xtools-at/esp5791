@@ -27,7 +27,7 @@ ln -s ~/path_to_repo/esp5791/Arduino/libraries/NimBLE-Arduino ~/Documents/Arduin
 ln -s ~/path_to_repo/esp5791/Arduino/ESP5791 ~/Documents/Arduino/ESP5791
 ```
 
-[Please use the libs included in the repo. You can find the original libs here for reference: [Web3E](https://github.com/AlphaWallet/Web3E) / [NimBLE)(https://github.com/h2zero/NimBLE-Arduino])
+(Please use the libs included in the repo. You can find the original libs here for reference: [Web3E](https://github.com/AlphaWallet/Web3E) / [NimBLE](https://github.com/h2zero/NimBLE-Arduino])
 
 ### Arduino IDE: Flash firmware
 
