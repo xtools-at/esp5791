@@ -1,0 +1,32 @@
+{
+    "description": "Web3E (Ethereum Embedded) interface for devices running Arduino with easy to use TokenScript integration.", 
+    "repository": {
+        "url": "https://github.com/AlphaWallet/Web3E", 
+        "type": "git"
+    }, 
+    "platforms": [ 
+        "espressif32"
+    ], 
+    "authors": [
+        {
+            "maintainer": true, 
+            "name": "James Brown", 
+            "url": "https://github.com/JamesSmartCell", 
+            "email": "j@smarttokenlabs.com"
+        }
+    ], 
+    "frameworks": "arduino",
+    "keywords": [
+        "Web3",
+        "Web3E",
+        "Ethereum",
+        "DApp",
+        "NFT",
+        "TokenScript",
+		"AlphaWallet",
+		"Smart Tokens"
+    ],
+    "name": "Web3E", 
+    "version": "1.33", 
+    "homepage": "https://www.smarttokenlabs.com/"
+}

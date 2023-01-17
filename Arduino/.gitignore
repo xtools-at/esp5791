@@ -1,0 +1,9 @@
+# Arduino IDE build artifacts
+*/debug_custom.json
+*/debug.cfg
+*/esp32.svd
+
+# Misc
+*/*.bkp
+*/firefly_display.h
+*/firefly_fonts.h
