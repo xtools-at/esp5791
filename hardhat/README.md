@@ -28,7 +28,7 @@ that repo for specific questions on how to use the tools.
 
 MIT
 
-Copyright © 2023 (@xtools-at)[https://github.com/xtools-at] - all rights reserved
+Copyright © 2023 (@xtools-at)[https://github.com/xtools-at]
 
 ## Disclaimer
 
