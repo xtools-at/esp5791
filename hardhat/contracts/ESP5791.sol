@@ -22,7 +22,9 @@ contract ESP5791 is PBTSimple {
     /**
      * @dev Get the token data for a given chip address.
      */
-    function getTokenData(address chipAddress) public view returns (TokenData memory) {
+    function getTokenData(address chipAddress) public view virtual returns (TokenData memory) {
+        require(_tokenDatas[chipAddress].set, "PBT: No mapped token for chip address");
+
         return _tokenDatas[chipAddress];
     }
 
@@ -46,8 +48,8 @@ contract ESP5791 is PBTSimple {
     /**
      * @dev Call to update the mapping of chipsAdresses to tokenIds - admin only
      */
-    function seedChipToTokenMapping(address[] memory chipAddresses, uint256[] memory tokenIds)
-        public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function seedChipToTokenMapping(address[] memory chipAddresses, uint[] memory tokenIds)
+        public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
         _seedChipToTokenMapping(chipAddresses, tokenIds);
     }
 
@@ -55,7 +57,7 @@ contract ESP5791 is PBTSimple {
      * @dev Call to replace old chip adresses with new ones - admin only
      */
     function updateChips(address[] calldata chipAddressesOld, address[] calldata chipAddressesNew)
-        public onlyRole(DEFAULT_ADMIN_ROLE) {
+        public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
         _updateChips(chipAddressesOld, chipAddressesNew);
     }
 
@@ -63,12 +65,12 @@ contract ESP5791 is PBTSimple {
 
     /**
      * @dev {_transferTokenWithChip} override to (safe) mint the token if it doesn't exist yet
-     * (don't use {PBTBase-_mintTokenWithChip})
+     * (doesn't use {PBTSimple-_mintTokenWithChip})
      */
-    function _transferTokenWithChip(bytes calldata signatureFromChip, uint256 blockNumberUsedInSig, bool useSafeTransferFrom)
+    function _transferTokenWithChip(bytes calldata signatureFromChip, uint blockNumberUsedInSig, bool useSafeTransferFrom)
         internal virtual override {
         TokenData memory tokenData = _getTokenDataForChipSignature(signatureFromChip, blockNumberUsedInSig);
-        uint256 tokenId = tokenData.tokenId;
+        uint tokenId = tokenData.tokenId;
 
         if (_exists(tokenId)) {
             // transfer if token exists

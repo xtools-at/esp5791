@@ -10,6 +10,7 @@ Ready-to-deploy PBT contract based on [Chiru Labs' PBT implementation](https://g
 - copy `.env.example` to `.env` and put your own values in
 - compile contracts: `yarn compile`
 - TODO: deploy contracts (no script yet)
+- TODO: seed chip addresses (no script yet)
 
 ## Interact with contract
 
@@ -22,7 +23,7 @@ Ready-to-deploy PBT contract based on [Chiru Labs' PBT implementation](https://g
 ## Notes
 
 Hardhat dev environment based on [PaulRBerg's Hardhat Template](https://github.com/paulrberg/hardhat-template), refer to
-that repo for specific questions on how to use the tools.
+that repo's README for specific questions on how to use the tools.
 
 ## License
 

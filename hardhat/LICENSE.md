@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Martin Kainzbauer: Smart contracts & hardhat config
+Copyright (c) 2023 Martin Kainzbauer: Smart contracts
 
 Copyright (c) 2023 Paul Razvan Berg: "Hardhat Template" dev environment (https://github.com/paulrberg/hardhat-template)
 

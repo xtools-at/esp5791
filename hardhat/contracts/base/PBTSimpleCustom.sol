@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-/** PATCH notes: imports, custom ERC721ReadOnly */
+/** PATCH notes: imports, custom ERC721ReadOnly, _getChipAddressForChipSignature */
 import "@chiru-labs/pbt/src/IPBT.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "./extensions/ERC721ReadOnlyCustom.sol";
@@ -156,10 +156,11 @@ contract PBTSimple is ERC721ReadOnly, IPBT {
         }
     }
 
-    function _getTokenDataForChipSignature(bytes calldata signatureFromChip, uint256 blockNumberUsedInSig)
+    /** PATCH: separate part of {_getTokenDataForChipSignature} to recover chip address from input  */
+    function _getChipAddressForChipSignature(bytes calldata signatureFromChip, uint256 blockNumberUsedInSig)
         internal
         view
-        returns (TokenData memory)
+        returns (address)
     {
         // The blockNumberUsedInSig must be in a previous block because the blockhash of the current
         // block does not exist yet.
@@ -175,7 +176,16 @@ contract PBTSimple is ERC721ReadOnly, IPBT {
 
         bytes32 blockHash = blockhash(blockNumberUsedInSig);
         bytes32 signedHash = keccak256(abi.encodePacked(_msgSender(), blockHash)).toEthSignedMessageHash();
-        address chipAddr = signedHash.recover(signatureFromChip);
+
+        return signedHash.recover(signatureFromChip);
+    }
+
+    function _getTokenDataForChipSignature(bytes calldata signatureFromChip, uint256 blockNumberUsedInSig)
+        internal
+        view
+        returns (TokenData memory)
+    {
+        address chipAddr = _getChipAddressForChipSignature(signatureFromChip, blockNumberUsedInSig);
 
         TokenData memory tokenData = _tokenDatas[chipAddr];
         if (tokenData.set) {
