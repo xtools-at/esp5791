@@ -30,7 +30,6 @@ using namespace std;
 // BLE server setup
 #define BLE_SERVER_NAME "ESP-5791" // update to change broadcasted device name
 #define BLE_SERVICE_UUID "5791"
-// #define BLE_DESCRIPTOR_DESCRIPTION_UUID "2901"
 const string BLE_DEFAULT_TEXT_WRITE = "WRITE message via bluetooth to get signature";
 NimBLEServer *pServer = NULL;
 NimBLECharacteristic *pCharPubkey = NULL;
@@ -75,8 +74,6 @@ NimBLECharacteristic *pCharMessageHash = NULL;
 #define EEPROM_DATA_LENGTH_BOOT (4)
 
 // Eth prefixes
-const char ADDRESS_URI_PREFIX[] PROGMEM = {
-    'e', 't', 'h', 'e', 'r', 'e', 'u', 'm', ':'};
 const char *PERSONAL_MESSAGE_PREFIX_32 = "0x19457468657265756d205369676e6564204d6573736167653a0a3332";
 
 /* System - errors and storage */
@@ -217,7 +214,7 @@ void eth_keccak256(const uint8_t *data, uint16_t length, uint8_t *result)
 /* Ethereum signed messages using the interfaces above */
 string eth_signMessage(const uint8_t *message, size_t len)
 {
-    // Hash the message
+    // hash the message
     uint8_t digest[ETH_KECCAK256_LENGTH];
     eth_keccak256(message, len, digest);
 
@@ -339,13 +336,6 @@ static void bootstrap()
     eth_keccak256(privateKey, ETH_PRIVATEKEY_LENGTH, checksum);
 
     // *********
-    // Compute the pairing secret keccak(0x00 || keccak(privateKey))[:16]
-    // eth_keccak256(checksum, ETH_KECCAK256_LENGTH, &scratch[ETH_KECCAK256_LENGTH + 1]);
-    // scratch[ETH_KECCAK256_LENGTH] = 0;
-    // eth_keccak256(&scratch[ETH_KECCAK256_LENGTH], ETH_KECCAK256_LENGTH + 1, scratch);
-    // writeStorage(EEPROM_DATA_OFFSET_PAIR_SECRET, EEPROM_DATA_LENGTH_PAIR_SECRET, scratch);
-
-    // *********
     // Compute private and public key and wallet address
     writeStorage(EEPROM_DATA_OFFSET_SECRET, EEPROM_DATA_LENGTH_SECRET, privateKey);
     if (DEBUG_SERIAL)
@@ -359,18 +349,11 @@ static void bootstrap()
         Serial.println("- created and stored public key");
 
     // - address
-    // -- compute the address (leave some space at the beginning for the URI scheme in the next part)
+    // -- compute the address
     eth_publicKeyToAddress(pubKey, &scratch[9]);
     writeStorage(EEPROM_DATA_OFFSET_ADDRESS, EEPROM_DATA_LENGTH_ADDRESS, &scratch[9]);
     if (DEBUG_SERIAL)
         Serial.println(String("- created and stored wallet address: ") + util_convertBytesToHex(&scratch[9], ETH_ADDRESS_LENGTH).c_str());
-
-    // *********
-    // Generate the wallet URI ("ethereum:" + checksumAddress);
-    // memcpy_P(scratch, ADDRESS_URI_PREFIX, 9);
-    // Place the null-terminated, checksum address into the string after the "ethereum:"
-    // ethers_addressToChecksumAddress(&scratch[9], (char*)&scratch[9]);
-    // writeStorage(EEPROM_DATA_OFFSET_ADDRESS_URI, EEPROM_DATA_LENGTH_ADDRESS_URI, scratch);
 
     // *********
     // write checksum address and boot flag last
@@ -481,19 +464,8 @@ void setupBleServer()
     // init
     NimBLEDevice::init(BLE_SERVER_NAME);
 
-    /*
-    // NimBLE specific settings
-    #ifdef ESP_PLATFORM
-        NimBLEDevice::setPower(ESP_PWR_LVL_P9); // +9db
-    #else
-        NimBLEDevice::setPower(9); // +9db
-    #endif
-    NimBLEDevice::setSecurityAuth(false, false, true);
-    */
-
     pServer = NimBLEDevice::createServer();
     NimBLEService *pService = pServer->createService(BLE_SERVICE_UUID);
-    // NimBLEUUID descriptorUuid = NimBLEUUID(BLE_DESCRIPTOR_DESCRIPTION_UUID);
 
     // get public Eth values to broadcast
     uint8_t address[ETH_ADDRESS_LENGTH];
@@ -505,53 +477,31 @@ void setupBleServer()
     // - readonly: public key
     pCharPubkey = pService->createCharacteristic("A001", NIMBLE_PROPERTY::READ, 256);
     pCharPubkey->setValue(util_convertBytesToHex(pubkey, ETH_PUBLICKEY_LENGTH));
-    // NimBLEDescriptor descPubkey(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descPubkey.setValue("Info: Public Key");
-    // pCharPubkey->addDescriptor(&descPubkey);
 
     // - readonly: wallet address
     pCharAddress = pService->createCharacteristic("A002", NIMBLE_PROPERTY::READ, 256);
     pCharAddress->setValue(util_convertBytesToHex(address, ETH_ADDRESS_LENGTH));
-    // NimBLEDescriptor descAddress(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descAddress.setValue("Info: Wallet address");
-    // pCharAddress->addDescriptor(&descAddress);
-
     // - input: plaintext payload
     pCharWritePayload = pService->createCharacteristic("B001", NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::WRITE, 256);
     pCharWritePayload->setCallbacks(new PlaintextMessageCallbacks());
     pCharWritePayload->setValue(BLE_DEFAULT_TEXT_WRITE);
-    // NimBLEDescriptor descPayload(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descPayload.setValue("Input: WRITE plaintext message to sign here");
-    // pCharWritePayload->addDescriptor(&descPayload);
 
     // - input: hashed payload
     pCharWritePayloadHashed = pService->createCharacteristic("B002", NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::WRITE, 256);
     pCharWritePayloadHashed->setCallbacks(new HashedMessageCallbacks());
     pCharWritePayloadHashed->setValue(BLE_DEFAULT_TEXT_WRITE);
-    // NimBLEDescriptor descPayloadHashed(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descPayloadHashed.setValue("Input: WRITE keccak256-hashed message to sign here");
-    // pCharWritePayloadHashed->addDescriptor(&descPayloadHashed);
 
     // - output: signature
     pCharSignature = pService->createCharacteristic("C001", NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, 256);
     pCharSignature->setValue(string("Signature will appear here"));
-    // NimBLEDescriptor descSignature(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descSignature.setValue("Output: Signature");
-    // pCharSignature->addDescriptor(&descSignature);
 
     // - output: signed ETH-message hash
     pCharMessageHash = pService->createCharacteristic("C002", NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, 256);
     pCharMessageHash->setValue(string("Signed message hash will appear here"));
-    // NimBLEDescriptor descMessageHash(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descMessageHash.setValue("Output: Signed message hash");
-    // pCharMessageHash->addDescriptor(&descMessageHash);
 
     // - output: hashed payload
     pCharHashedPayload = pService->createCharacteristic("C008", NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY, 256);
     pCharHashedPayload->setValue(string("Keccak-256 hashed payload will appear here"));
-    // NimBLEDescriptor descPayloadHash(descriptorUuid, NIMBLE_PROPERTY::READ, 128);
-    // descPayloadHash.setValue("Output: Hashed payload");
-    // pCharHashedPayload->addDescriptor(&descPayloadHash);
 
     // start BLE advertising
     pService->start();
