@@ -39,6 +39,10 @@ a, .accent {
   padding-left: 1.2rem;
 }
 
+.section.pad {
+  padding-top: 64px;
+}
+
 @media only screen and (max-width: 992px) {
   .parallax-container .section {
     position: absolute;
@@ -61,6 +65,9 @@ a, .accent {
   }
   .parallax-container {
     min-height: 400px;
+  }
+  .section.pad {
+    padding-top: 56px;
   }
 }
 
@@ -96,7 +103,7 @@ a, .accent {
 .h4 {
   font-size: 2.28rem;
   line-height: 110%;
-  margin: 1.52rem 0 0.912rem 0;
+  margin: 1.5rem 0 1.8rem 0;
 }
 
 .h5 {
