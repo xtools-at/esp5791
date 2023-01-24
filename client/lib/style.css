@@ -1,0 +1,124 @@
+nav ul a,
+nav .brand-logo {
+  color: white;
+}
+
+.container {
+  width: 90%;
+}
+
+p {
+  line-height: 2rem;
+}
+
+a, .accent {
+  color: #FF9800;
+}
+
+.brand-logo > img {
+  width: 64px;
+  height: auto;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+
+.parallax-container .section {
+  width: 100%;
+}
+
+.btn, .btn-large {
+  margin-bottom: 0.2rem;
+}
+
+.sidenav .subheader.pad {
+  padding-left: 1.2rem;
+}
+
+@media only screen and (max-width: 992px) {
+  .parallax-container .section {
+    position: absolute;
+    /* top: 40%; */
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+  .brand-logo > img {
+    width: 56px;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  .parallax-container {
+    min-height: 400px;
+  }
+}
+
+.page-footer {
+  margin: 0;
+}
+
+.page-footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+.contrast {
+  text-shadow: 1px 1px 1px rgba(0,0,0,.8)/*, -1px -1px 1px rgba(255,255,255,.3)*/;
+}
+
+.secondary {
+  color: #757575;
+}
+
+.h2 {
+  font-size: 3.56rem;
+  line-height: 110%;
+  margin: 2.3733333333rem 0 1.424rem 0;
+}
+
+.h3 {
+  font-size: 2.92rem;
+  line-height: 110%;
+  margin: 1.9466666667rem 0 1.168rem 0;
+}
+
+.h4 {
+  font-size: 2.28rem;
+  line-height: 110%;
+  margin: 1.52rem 0 0.912rem 0;
+}
+
+.h5 {
+  font-size: 1.64rem;
+  line-height: 110%;
+  margin: 1.1rem 0 0.66rem 0;
+}
+
+i.smed {
+  font-size: 2.8rem;
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}

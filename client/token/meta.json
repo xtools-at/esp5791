@@ -1,0 +1,8 @@
+{
+  "id": "0",
+  "name": "ESP-5791 Maker Certification",
+  "description": "Yay you've made it and created your own ESP-5791 Physical Backed Token device. Enjoy your badge of honour!",
+  "image": "https://xtools-at.github.io/esp5791/token/token.png",
+  "external_url": "https://xtools-at.github.io/esp5791",
+  "attributes": []
+}

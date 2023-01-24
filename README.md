@@ -10,7 +10,7 @@ Some folks smarter than me put together the specification for [EIP-5791](https:/
 
 ## Key features
 
-The _ESP-5791 project_ complies with the [EIP-5791 spec](https://eips.ethereum.org/EIPS/eip-5791) and facilitates
+The _ESP-5791 project_ complies with the [EIP-5791 standard](https://eips.ethereum.org/EIPS/eip-5791) and facilitates
 
 - creating a hardware device using an ESP32 microcontroller that
   - securely generates and stores private keys on first boot
@@ -97,6 +97,17 @@ The message you have to sign on your device for the provided EIP-5791 **PBT smar
   - look up e.g. on [Etherscan](https://etherscan.io), note down the corresponding block **number** too (our UI takes care of this for you)
 
 You need to concatenate both these hex strings before signing them. In a simplified scenario, if your wallet would e.g. be _0x42069_ and the blockhash of block #777 is _0xBBBBB_, then your message to sign should look like this: `0x42069BBBBB`. After obtaining the _signature_ from the device, you can call the smart contract like this: `ESP5791.transferTokenWithChip(mySignatureHexString = 0x..., blockNumberUsedInSig = 777)` to claim the connected NFT. Generated signatures expire within 250 blocks.
+
+To edit the provided UI, you'll need to run a server locally, as MetaMask and other wallets don't work locally (i.e. using `file://` protocol). To quickly spin up a dev server, you could use
+
+```bash
+# install server
+npm i -g http-server
+# go to public web directory
+cd ./client
+# start dev server on http://localhost:8080
+npx http-server
+```
 
 ---
 

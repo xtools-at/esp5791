@@ -1,0 +1,5 @@
+# All
+User-agent: *
+Allow: /
+Disallow: /lib/*
+Disallow: /token/*

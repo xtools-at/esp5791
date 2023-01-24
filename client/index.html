@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og:http://ogp.me/ns#" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow"/>
+    <title>ESP-5791 - DIY Physical Backed NFTs</title>
+    <meta name="description" content="DIY Physical Backed Tokens (EIP-5791) using ESP32 and BLE"/>
+    <meta name="keywords" content="physical backed tokens, nft, pbt, blockchain, crypto"/>
+    <meta http-equiv="content-language" content="en"/>
+    <link rel="canonical" href="https://xtools-at.github.io/esp5791"/>
+
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" sizes="any"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="./images/icon-512.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="./images/icon-192.png"/>
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png"/>
+
+    <meta name="theme-color" content="#00BCD4"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta property="og:site_name" content="ESP-5791"/>
+    <meta property="og:title" content="ESP-5791 - DIY Physical Backed NFTs"/>
+    <meta property="og:url" content="https://xtools-at.github.io/esp5791"/>
+    <meta property="og:image" content="https://xtools-at.github.io/esp5791/images/icon-512-maskable.png"/>
+    <meta property="og:description" content="DIY Physical Backed Tokens (EIP-5791) using ESP32 and BLE"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="ESP-5791 - DIY Physical Backed NFTs"/>
+    <meta name="twitter:description" content="DIY Physical Backed Tokens (EIP-5791) using ESP32 and BLE"/>
+    <meta name="twitter:image:src" content="https://xtools-at.github.io/esp5791/images/icon-512-maskable.png"/>
+    <meta name="twitter:creator" content="@xtools_"/>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://cdn.ethers.io" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="./lib/style.css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+  </head>
+
+  <body>
+    <nav class="cyan" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo">
+          <img alt="ESP-5791" src="./images/icon-192-maskable.png" class="left" />
+          <span class="hide-on-small-only">ESP-5791</span>
+        </a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#about">About <i class="material-icons left">memory</i></a></li>
+          <li><a href="#features">Features <i class="material-icons left">view_in_ar</i></a></li>
+          <li><a href="#connect">Connect <i class="material-icons left">bluetooth_connected</i></a></li>
+          <li>
+            <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+              Github <i class="material-icons left">code</i>
+            </a>
+          </li>
+        </ul>
+
+        <a class="right hide-on-large-only" title="Github" href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+          <i class="material-icons left">code</i>
+        </a>
+
+        <ul id="nav-mobile" class="sidenav">
+          <li class="center-align cyan"><span class="subheader white-text">ESP-5791</span></li>
+          <li><a href="#about"><i class="material-icons left">memory</i>About ESP-5791</a></li>
+          <li><a href="#features"><i class="material-icons left">view_in_ar</i>Features</a></li>
+          <li><a href="#connect"><i class="material-icons left">bluetooth_connected</i>Connect device</a></li>
+          <li><div class="divider"></div></li>
+          <li class=""><span class="subheader pad">External Links</span></li>
+          <li>
+            <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+              <i class="material-icons left">code</i>ESP-5791 on Github
+            </a>
+          </li>
+          <li>
+            <a href="https://deptagency.com/web3" target="_blank" rel="noopener noreferrer">
+              <i class="material-icons left">auto_fix_high</i>WEB3/DEPT®
+            </a>
+          </li>
+        </ul>
+
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+      </div>
+    </nav>
+
+    <div class="parallax-container">
+      <div class="section">
+        <div class="container">
+          <br><br>
+          <h1 class="header center-align cyan-text contrast">DIY Physical Backed NFTs</h1>
+          <div class="row center-align contrast">
+            <div class="header h5 col s12">
+              EIP-5791 Physical Backed Tokens using ESP32 and BLE
+            </div>
+          </div>
+          <div class="row center-align">
+            <a href="#connect" class="btn-large waves-effect waves-light orange">
+              Connect Gadget
+              <i class="material-icons left">bluetooth_connected</i>
+            </a>
+            <a href="https://github.com/xtools-at/esp5791" class="btn-large waves-effect waves-dark white orange-text"
+              target="_blank"
+              rel="noopener noreferrer">
+              Make your own
+              <i class="material-icons left">code</i>
+            </a>
+          </div>
+          <br><br>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg1.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="container" id="about">
+      <div class="section">
+        <h2 class="h4">About the <em>ESP-5791</em> project<i class="material-icons smed cyan-text left">memory</i></h2>
+        <p>
+          The concept of <em>Physical Backed Tokens</em> (PBTs) allows one to <em>bind a NFT permanently to a physical object</em>, using
+          a small chip that can generate cryptographic keys and sign messages. The signature obtained from a device like this can be used
+          to interact with a <em>smart contract</em> to transfer the linked NFT to one&#39;s wallet.
+        </p>
+
+        <p>
+          Some folks smarter than me put together the specification
+          for <a href="https://eips.ethereum.org/EIPS/eip-5791" target="_blank" rel="noopener noreferrer"><strong>EIP-5791</strong></a> on
+          how to make this work both on the smart contract- and hardware-side, in a way that it&#39;s safe to use and no one involved in the
+          process can cheat. We've implemented this standard using the
+          an <a href="https://randomnerdtutorials.com/getting-started-with-esp32" target="_blank" rel="noopener noreferrer"><strong>ESP32</strong></a
+          > microcontroller with <em>Bluetooth Low Energy</em>, a freely available and low-cost development board.
+        </p>
+        <p>
+          <a class="right btn-large waves-effect waves-light orange" href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+            ESP-5791 on Github
+            <i class="material-icons left">code</i>
+          </a>
+        </p>
+        <div style="clear:both;margin-bottom:2rem;"></div>
+      </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+      <div class="section">
+        <div class="container">
+          <div class="row center-align">
+            <p class="header col s12 h5 contrast">
+              <strong class="h2"><span class="orange-text">ESP</span>32 <i class="material-icons medium">favorite</i> EIP<span class="orange-text">-5791</span></strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg1.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="container" id="features">
+      <div class="section">
+        <h2 class="h4">Batteries included <i class="material-icons smed cyan-text left">view_in_ar</i></h2>
+        <p>
+          The <em>ESP-5791 project</em> is fully free and open source (MIT licensed), complies with
+          the <a href="https://eips.ethereum.org/EIPS/eip-5791" target="_blank" rel="noopener noreferrer">EIP-5791 standard</a>, and includes
+        </p>
+
+        <ul class="browser-default">
+          <li>The <strong>ESP32 software</strong>, to be used and flashed with Arduino IDE, to create the hardware</li>
+          <li>
+            Ready-to-use <strong>smart contracts</strong> with scripts for easy Token deployment and management, and
+            a deployed demo Token contract to test your hardware creation with right away.
+          </li>
+          <li>
+            An example <a href="#connect"><strong>GUI</strong></a> to showcase how to interact with the hardware <i>and</i> smart
+            contract to obtain the linked NFT. Working with <em>Web Bluetooth</em> and <em>MetaMask</em> (and
+            other <a href="https://eips.ethereum.org/EIPS/eip-1193" target="_blank" rel="noopener noreferrer">EIP-1193</a> compatible wallets).
+          </li>
+          <li>A lot of love and dedication, but also the occasional sweat- and teardrop :)</li>
+        </ul>
+
+        <h3 class="sr-only">Key advantages of PBTs</h3>
+        <ul class="row">
+          <li class="col s12 m6 l3">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">verified</i>
+            </div>
+            <h3 class="center-align h5">Verify product authenticity</h3>
+            <p>
+              Battle counterfeit products with cryptography, and authenticate
+              them with a single scan of the embedded chip.
+            </p>
+          </li>
+
+          <li class="col s12 m6 l3">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">manage_search</i>
+            </div>
+            <h3 class="center-align h5">Track product lifecycle</h3>
+            <p>
+              Make the product lifecycle transparent and
+              traceable, and prove ownership and ownership history of an item easily.
+            </p>
+          </li>
+
+          <li class="col s12 m6 l3">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">favorite</i>
+            </div>
+            <h3 class="center-align h5">Drive customer loyalty</h3>
+            <p>
+              Connect to the owners of your products. Allow
+              loyalty rewards like access to exclusive content or events
+              to be transferred with the product itself.
+            </p>
+          </li>
+
+          <li class="col s12 m6 l3">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">view_in_ar</i>
+            </div>
+            <h3 class="center-align h5">Ready for the Metaverse</h3>
+            <p>
+              Give digital ownership back to your customers. Create
+              digital twins of your products that can be used in
+              the digital world, and build communities around your products.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+      <div class="section">
+        <div class="container">
+          <div class="row center-align">
+            <h3 class="header col s12 h5 contrast">
+              One small chip, endless applications.
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg1.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="container" id="connect">
+      <div class="section">
+        <div class="row">
+          <h2 class="sr-only">Connect device</h2>
+          <div class="col s12 m4 l4">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">bluetooth_connected</i>
+            </div>
+            <h3 class="center-align h5">Connect via <i>Web Bluetooth</i></h3>
+            <p>
+              Connect to your gadget directly from the browser and
+              get your signature. Works in <b>Chrome on Desktop</b> only.
+            </p>
+            <p>
+              Don't have an <em>ESP-5791</em> device yet? <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer"
+                >Make your own</a
+              >, it's free and open source!
+            </p>
+          </div>
+
+          <div class="col s12 m8 l8 center-align">
+            <ul class="collapsible" id="connector">
+              <li class="active">
+                <div class="collapsible-header"><i class="material-icons">safety_check</i>1) Browser Check</div>
+                <div class="collapsible-body center-align">
+                  <p class="">
+                    The Web Bluetooth API <i>and</i> Wallets together are only supported in Chrome on Desktop at the
+                    moment. Click the button below to check the browser requirements before you start:
+                  </p>
+                  <p><button class="js-browser-check btn-large waves-effect waves-light orange">
+                    Check Browser
+                    <i class="material-icons left">safety_check</i>
+                  </button></p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">wallet</i>2) Connect Wallet</div>
+                <div class="collapsible-body center-align">
+                  <p class="">
+                    Connect your wallet so we can send your generated signature directly to your selected PBT contract in step 5:
+                  </p>
+                  <p><button class="js-wallet-connect btn-large waves-effect waves-light orange">
+                    Connect Wallet
+                    <i class="material-icons left">wallet</i>
+                  </button></p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">edit_location</i>3) Token Contract</div>
+                <div class="collapsible-body center-align">
+                  <p class="">
+                    Enter the contract address of your PBT contract here:
+                  </p>
+
+                  <div class="input-field">
+                    <i class="material-icons prefix">edit_location</i>
+                    <input id="input-token-address" type="text" class="validate" required="true" minlength="42" maxlength="42">
+                    <label for="input-token-address">PBT Contract Address (0x...)</label>
+                    <span class="helper-text" data-error="Contract address length mismatch"></span>
+                  </div>
+
+                  <p id="js-token-network" class="cyan-text"></p>
+
+                  <p><button class="js-token-continue btn-large waves-effect waves-light orange">
+                    Continue
+                    <i class="material-icons left">edit_location</i>
+                  </button></p>
+                  <div>- or -</div>
+                  <button class="js-token-demo btn waves-effect waves-dark white orange-text">
+                    Use ESP-5791 demo contract*
+                  </button>
+                  <div class="secondary">* (Demo contract is deployed to <b>Goerli testnet</b>)</div>
+
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">verified</i>4) Get Signature</div>
+                <div class="collapsible-body center-align">
+                  <p class="">
+                    Connect to your device via Bluetooth to get a signature:
+                  </p>
+                  <p><button class="js-connect btn-large waves-effect waves-light orange">
+                    Connect Device
+                    <i class="material-icons left">bluetooth_connected</i>
+                  </button></p>
+
+                  <p class="cyan-text">
+                    <div id="js-connect-chipaddress"></div>
+                    <div id="js-connect-signature"></div>
+                    <div id="js-connect-blocknumber"></div>
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">diamond</i>5) Claim Token</div>
+                <div class="collapsible-body center-align">
+                  <p class="">
+                    The final step! Send your signature to the smart contract to transfer the linked PBT into your wallet:
+                  </p>
+                  <p><button class="js-claim btn-large waves-effect waves-light orange">
+                    Claim Token
+                    <i class="material-icons left">diamond</i>
+                  </button></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+      <div class="section">
+        <div class="container">
+          <div class="row center-align">
+            <h3 class="header col s12 h5 contrast">
+              Connect the physical world to the digital one.
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg1.jpg" alt="" />
+      </div>
+    </div>
+
+    <footer class="page-footer cyan">
+      <div class="container">
+        <div class="row">
+          <div class="col l8 s12">
+            <h3 class="h5">About EIP-5791</h3>
+            <p>
+              The concept of <em>Physical Backed Tokens</em> (PBTs) as defined
+              by <a href="https://eips.ethereum.org/EIPS/eip-5791" target="_blank" rel="noopener noreferrer"><em>EIP-5791</em></a> allows
+              one to <em>bind a NFT permanently to a physical object</em>, using
+              a small chip that can generate cryptographic keys and sign messages. The
+              signature obtained from a device like this can be used to interact
+              with a <em>smart contract</em> to transfer the linked <em>NFT</em> to one's wallet.
+            </p>
+          </div>
+
+          <div class="col l4 s12">
+            <h3 class="h5">Connect</h3>
+            <ul>
+              <li><a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+                Github
+              </a></li>
+              <li><a href="https://twitter.com/xtools_" target="_blank" rel="noopener noreferrer">
+                Twitter
+              </a></li>
+              <li><a href="https://deptagency.com/web3" target="_blank" rel="noopener noreferrer">
+                WEB3/DEPT®
+              </a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2023 || made by
+          <a
+            href="https://github.com/xtools-at"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Martin Kainzbauer</a
+          >
+          &nbsp;||&nbsp;
+          <a
+            href="https://deptagency.com/web3"
+            target="_blank"
+            rel="noopener noreferrer"
+            >WEB3/DEPT®</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/js/materialize.min.js"></script>
+    <script>
+      M.AutoInit();
+      // collapsible
+      document.addEventListener('DOMContentLoaded', function() {
+        M.Collapsible.init(document.querySelectorAll('.collapsible'), {});
+      });
+    </script>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+
+    <script src="./lib/esp_ble.js"></script>
+    <script src="./lib/esp_eth.js"></script>
+    <script defer src="./lib/esp_controller.js"></script>
+  </body>
+</html>
