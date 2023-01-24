@@ -72,6 +72,8 @@ contract ESP5791 is PBTSimple {
         TokenData memory tokenData = _getTokenDataForChipSignature(signatureFromChip, blockNumberUsedInSig);
         uint tokenId = tokenData.tokenId;
 
+        require(_ownerOf(tokenId) != _msgSender(), "PBT: you already own this token");
+
         if (_exists(tokenId)) {
             // transfer if token exists
             if (useSafeTransferFrom) {

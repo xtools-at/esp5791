@@ -3,13 +3,19 @@
 Ready-to-deploy PBT contract based on [Chiru Labs' PBT implementation](https://github.com/chiru-labs/PBT) and
 [OpenZeppelin's ERC721 NFT contracts](https://github.com/OpenZeppelin/openzeppelin-contracts).
 
+Also check out our [demo contract on Etherscan](https://goerli.etherscan.io/token/0xfad7eab70ed7569aa54afd7b11bb376d948b2665);
+
 ## Quickstart
 
 - switch to `hardhat` directory: `cd hardhat`
 - install dependencies: `yarn`
 - copy `.env.example` to `.env` and put your own values in
 - compile contracts: `yarn compile`
-- TODO: deploy contracts (no script yet)
+- deploy contract: `yarn deploy --network goerli --name "My Token" --symbol "ABC" --uri "https://example.com/path-to-token-metadata/"`
+  - if you've changed the contract name, you also need to pass in `--contract MyCustomContract`
+  - use your desired network instead of `goerli`. Check `hardhat.config.ts` for all network keys
+- (recommended) verify contract source code on Etherscan: `yarn verify --network goerli YOUR_CONTRACT_ADDRESS "My Token" "ABC" "https://example.com/path-to-token-metadata/"`
+  - you need to use the _exact_ same input as when deploying here
 - TODO: seed chip addresses (no script yet)
 
 ## Interact with contract

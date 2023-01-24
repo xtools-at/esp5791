@@ -1,13 +1,19 @@
-require("@nomicfoundation/hardhat-toolbox");
-const path = require("path");
-const dotenvConfig = require("dotenv").config;
+import "@nomicfoundation/hardhat-toolbox";
+import { resolve } from "path";
+import { config as dotenvConfig } from "dotenv";
+
+import "./tasks/accounts";
+import "./tasks/deploy";
+
+const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
+dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
 
 // Ensure that we have all the environment variables we need.
-dotenvConfig({ path: path.join(path.resolve(), "./.env") });
-const mnemonic = process.env.MNEMONIC;
+const mnemonic: string | undefined = process.env.MNEMONIC;
 if (!mnemonic) {
   throw new Error("Please set your MNEMONIC in a .env file");
 }
+
 const accounts = {
   count: 10,
   mnemonic,
@@ -27,31 +33,25 @@ const networks = {
   },
 
   /** public testnets */
-  rinkeby: {
-    // eth testnet (deprecated)
-    chainId: 4,
-    url: "https://rpc.ankr.com/eth_rinkeby",
-    accounts,
-  },
   goerli: {
     // eth testnet
     chainId: 5,
     url: "https://rpc.ankr.com/eth_goerli",
     accounts,
   },
-  mumbai: {
+  polygonMumbai: {
     // polygon testnet
     chainId: 80001,
     url: "https://rpc.ankr.com/polygon_mumbai",
     accounts,
   },
-  fuji: {
+  avalancheFujiTestnet: {
     // avalanche testnet
     chainId: 43113,
     url: "https://rpc.ankr.com/avalanche_fuji",
     accounts,
   },
-  chapel: {
+  bscTestnet: {
     // bsc testnet
     chainId: 97,
     url: "https://rpc.ankr.com/bsc_testnet_chapel",
@@ -59,7 +59,7 @@ const networks = {
   },
 
   /** public mainnets */
-  ethereum: {
+  mainnet: {
     chainId: 1,
     url: "https://rpc.ankr.com/eth",
     accounts,
@@ -86,11 +86,15 @@ module.exports = {
   solidity: "0.8.17",
   settings: {
     metadata: {
+      // Not including the metadata hash
+      // https://github.com/paulrberg/hardhat-template/issues/31
       bytecodeHash: "none",
     },
+    // Disable the optimizer when debugging
+    // https://hardhat.org/hardhat-network/#solidity-optimizer-support
     optimizer: {
       enabled: true,
-      runs: 10000,
+      runs: 800,
     },
   },
   paths: {
@@ -108,6 +112,22 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks,
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY || "",
+      goerli: process.env.ETHERSCAN_API_KEY || "",
+      sepolia: process.env.ETHERSCAN_API_KEY || "", // TODO
+      polygon: process.env.POLYGONSCAN_API_KEY || "",
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
+      avalanche: process.env.SNOWTRACE_API_KEY || "",
+      avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY || "",
+      bsc: process.env.BSCSCAN_API_KEY || "",
+      bscTestnet: process.env.BSCSCAN_API_KEY || "",
+      optimisticEthereum: process.env.OPTIMISM_API_KEY || "", // TODO
+      arbitrumOne: process.env.ARBISCAN_API_KEY || "", // TODO
+    },
+  },
+  typechain: {
+    outDir: "types",
+    target: "ethers-v5",
   },
 };
