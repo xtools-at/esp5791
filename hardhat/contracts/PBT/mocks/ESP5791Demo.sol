@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./ESP5791.sol";
+import "../ESP5791.sol";
 
 /**
  * @dev Mock contract for demoing PBT functionality.

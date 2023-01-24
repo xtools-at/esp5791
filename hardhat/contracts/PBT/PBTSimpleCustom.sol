@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 /** PATCH notes: imports, custom ERC721ReadOnly, _getChipAddressForChipSignature */
 import "@chiru-labs/pbt/src/IPBT.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "./extensions/ERC721ReadOnlyCustom.sol";
+import "../extensions/ERC721ReadOnlyCustom.sol";
 
 error InvalidSignature();
 error NoMintedTokenForChip();
@@ -32,7 +32,7 @@ contract PBTSimple is ERC721ReadOnly, IPBT {
      */
     mapping(address => TokenData) _tokenDatas;
 
-    constructor(string memory name, string memory symbol) ERC721ReadOnly(name, symbol) {}
+    constructor(string memory name, string memory symbol) ERC721Extended(name, symbol) {}
 
     // Should only be called for tokenIds that have not yet been minted
     // If the tokenId has already been minted, use _updateChips instead

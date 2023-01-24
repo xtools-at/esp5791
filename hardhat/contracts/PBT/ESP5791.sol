@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./base/PBTSimpleCustom.sol";
+import "./PBTSimpleCustom.sol";
 
 contract ESP5791 is PBTSimple {
     // constants

@@ -3,27 +3,20 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "./extensions/ERC721EnumerableCustom.sol";
+import "./ERC721EnumerableCustom.sol";
 
 /**
  * @dev ERC721 NFT contract with the following features:
  * - ERC721Enumerable
- * - ERC721Burnable
  * - Ownable
  * - AccessControl
- * - ERC2981 Royalty
  * - convenience methods to
  *  -- update baseURI (admin only)
  *  -- get existing token ids (all/by index)
  *  -- get all token ids owned by wallet(s)
- *  -- update royalty (default/per token id; admin only)
  */
 contract ERC721Extended is
     ERC721Enumerable,
-    ERC721Royalty,
-    ERC721Burnable,
     AccessControl,
     Ownable
 {
@@ -37,8 +30,6 @@ contract ERC721Extended is
     constructor(string memory name, string memory symbol) ERC721(name, symbol) {
         // give deployer admin-role
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        // set default royalty
-        _setDefaultRoyalty(_msgSender(), 200); // 100 = 1%
     }
 
 
@@ -99,7 +90,7 @@ contract ERC721Extended is
      * @dev See {IERC165-supportsInterface} - override required by Solidity.
      */
     function supportsInterface(bytes4 interfaceId) public view virtual
-        override(ERC721, ERC721Enumerable, ERC721Royalty, AccessControl) returns (bool) {
+        override(ERC721Enumerable, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 
@@ -114,27 +105,6 @@ contract ERC721Extended is
         _baseTokenURI = newBaseURI;
     }
 
-    /**
-     * @dev set default royalty - admin only
-     */
-    function setDefaultRoyalty(address receiver, uint96 feeNumerator)
-        public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(feeNumerator <= 10000, "ERC2981: royalty can't be more than 10%");
-
-        _setDefaultRoyalty(receiver, feeNumerator);
-    }
-
-    /**
-     * @dev set royalty for token id - admin only
-     */
-    function setTokenRoyalty(uint tokenId, address receiver, uint96 feeNumerator)
-        public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(feeNumerator <= 10000, "ERC2981: royalty can't be more than 10%");
-
-        _setTokenRoyalty(tokenId, receiver, feeNumerator);
-    }
-
-
     /** Internal methods */
 
     /**
@@ -143,20 +113,4 @@ contract ERC721Extended is
     function _baseURI() internal view virtual override returns (string memory) {
         return _baseTokenURI;
     }
-
-    /**
-     * @dev See {ERC721-_burn}
-     */
-    function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721Royalty) {
-        super._burn(tokenId);
-    }
-
-    /**
-     * @dev See {ERC721-_beforeTokenTransfer}
-     */
-    function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize)
-        internal virtual override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
-    }
-
 }
