@@ -51,20 +51,14 @@ NimBLECharacteristic *pCharMessageHash = NULL;
 
 // EEPROM storage
 #define EEPROM_SIZE (512)
-// - The keccak256(privateKey)
+// - The checksum [keccak256(privateKey)]
 #define EEPROM_DATA_OFFSET_CHECKSUM (0)
 #define EEPROM_DATA_LENGTH_CHECKSUM (ETH_KECCAK256_LENGTH)
-// - The secret key (symmetric) used for phone to send encrypted messages
-#define EEPROM_DATA_OFFSET_PAIR_SECRET (EEPROM_DATA_OFFSET_CHECKSUM + EEPROM_DATA_LENGTH_CHECKSUM)
-#define EEPROM_DATA_LENGTH_PAIR_SECRET (16)
-// - The address of the private key
-#define EEPROM_DATA_OFFSET_ADDRESS (EEPROM_DATA_OFFSET_PAIR_SECRET + EEPROM_DATA_LENGTH_PAIR_SECRET)
+// - The public address
+#define EEPROM_DATA_OFFSET_ADDRESS (EEPROM_DATA_OFFSET_CHECKSUM + EEPROM_DATA_LENGTH_CHECKSUM)
 #define EEPROM_DATA_LENGTH_ADDRESS (ETH_ADDRESS_LENGTH)
-// - The wallet URI (checksummed address with "ethereum:" scheme)
-#define EEPROM_DATA_OFFSET_ADDRESS_URI (EEPROM_DATA_OFFSET_ADDRESS + EEPROM_DATA_LENGTH_ADDRESS)
-#define EEPROM_DATA_LENGTH_ADDRESS_URI (9 + ETH_CHECKSUM_ADDRESS_LENGTH)
 // - The public key
-#define EEPROM_DATA_OFFSET_PUBLIC (EEPROM_DATA_OFFSET_ADDRESS_URI + EEPROM_DATA_LENGTH_ADDRESS_URI)
+#define EEPROM_DATA_OFFSET_PUBLIC (EEPROM_DATA_OFFSET_ADDRESS + EEPROM_DATA_LENGTH_ADDRESS)
 #define EEPROM_DATA_LENGTH_PUBLIC (ETH_PUBLICKEY_LENGTH)
 // - The private key
 #define EEPROM_DATA_OFFSET_SECRET (EEPROM_DATA_OFFSET_PUBLIC + EEPROM_DATA_LENGTH_PUBLIC)
@@ -215,44 +209,48 @@ void eth_keccak256(const uint8_t *data, uint16_t length, uint8_t *result)
 string eth_signMessage(const uint8_t *message, size_t len)
 {
     // hash the message
-    uint8_t digest[ETH_KECCAK256_LENGTH];
-    eth_keccak256(message, len, digest);
+    uint8_t hash[ETH_KECCAK256_LENGTH];
+    eth_keccak256(message, len, hash);
+    string digest = util_convertBytesToHex(hash, ETH_KECCAK256_LENGTH);
 
     if (DEBUG_SERIAL)
-        Serial.println(String("\n > sign: hashed plaintext message: ") + util_convertBytesToHex(digest, ETH_KECCAK256_LENGTH).c_str());
+        Serial.println(String("\n > sign: hashed plaintext message: ") + digest.c_str());
 
     return eth_signHashedMessage(digest);
 }
 
-string eth_signMessage(string payload, bool isHashed)
+string eth_signMessage(string payload)
 {
-    // convert message to bytes
-    const char *message = payload.c_str();
-    size_t len = strlen(message);
-
     if (DEBUG_SERIAL)
-        Serial.println(String("\n > sign: converting message to bytes: ") + message + (isHashed ? " (hashed)" : " (plaintext)"));
+        Serial.println(String("\n > sign: converting message to bytes: ") + payload.c_str());
 
-    if (isHashed)
+    if (payload.find("0x") == 0)
     {
-        uint8_t hash[len];
-        util_convertHexToBytes((uint8_t *)hash, message, len);
-        return eth_signHashedMessage(hash);
+        // hex string found, convert to bytes first
+        size_t len = payload.length();
+        size_t bytesLen = (len - 2) / 2;
+        uint8_t hex[bytesLen];
+        util_convertHexToBytes((uint8_t *)hex, payload.c_str(), len);
+
+        return eth_signMessage((uint8_t *)hex, bytesLen);
     }
     else
     {
+        // regular string, convert message to bytes
+        const char *message = payload.c_str();
+        size_t len = strlen(message);
+
         return eth_signMessage((uint8_t *)message, len);
     }
 }
 
-string eth_signHashedMessage(const uint8_t *digest)
+string eth_signHashedMessage(string digest)
 {
     if (DEBUG_SERIAL)
         Serial.println(String("\n[eth_signHashedMessage]"));
 
     // create the challenge
-    string dig = util_convertBytesToHex(digest, ETH_KECCAK256_LENGTH);
-    string challenge = PERSONAL_MESSAGE_PREFIX_32 + dig.substr(2, ETH_KECCAK256_LENGTH * 2 + 1);
+    string challenge = PERSONAL_MESSAGE_PREFIX_32 + digest.substr(2);
     const char *challengeStr = challenge.c_str();
     uint8_t challengeBytes[60];
     if (DEBUG_SERIAL)
@@ -272,10 +270,10 @@ string eth_signHashedMessage(const uint8_t *digest)
     if (DEBUG_SERIAL)
         Serial.println(String(" - signature: ") + sig.c_str());
 
-    // set BLE values
+    // set BLE characteristic values
     pCharSignature->setValue(sig);
     pCharMessageHash->setValue(util_convertBytesToHex(challengeHash, ETH_KECCAK256_LENGTH));
-    pCharHashedPayload->setValue(dig);
+    pCharHashedPayload->setValue(digest);
 
     return sig;
 }
@@ -327,9 +325,6 @@ static void bootstrap()
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_entropy_free(&entropy);
 
-    // init the largest amount of memory we need for anything we cache
-    uint8_t scratch[EEPROM_DATA_LENGTH_PUBLIC];
-
     // *********
     // compute checksum
     uint8_t checksum[ETH_PRIVATEKEY_LENGTH];
@@ -350,10 +345,11 @@ static void bootstrap()
 
     // - address
     // -- compute the address
-    eth_publicKeyToAddress(pubKey, &scratch[9]);
-    writeStorage(EEPROM_DATA_OFFSET_ADDRESS, EEPROM_DATA_LENGTH_ADDRESS, &scratch[9]);
+    uint8_t address[ETH_ADDRESS_LENGTH];
+    eth_publicKeyToAddress(pubKey, address);
+    writeStorage(EEPROM_DATA_OFFSET_ADDRESS, EEPROM_DATA_LENGTH_ADDRESS, address);
     if (DEBUG_SERIAL)
-        Serial.println(String("- created and stored wallet address: ") + util_convertBytesToHex(&scratch[9], ETH_ADDRESS_LENGTH).c_str());
+        Serial.println(String("- created and stored wallet address: ") + util_convertBytesToHex(address, ETH_ADDRESS_LENGTH).c_str());
 
     // *********
     // write checksum address and boot flag last
@@ -396,7 +392,7 @@ void setup()
         // sign test message
         Serial.println("\n[DEBUG - Signature test]");
         string testMsg = "ABC123"; // keccak256: 0xdbb28303106dbfbadda4b9d1faf44c80368b4b8a4b642550fd48b760a61a9c12
-        eth_signMessage(testMsg, false);
+        eth_signMessage(testMsg);
     }
 }
 
@@ -417,7 +413,7 @@ class PlaintextMessageCallbacks : public NimBLECharacteristicCallbacks
             Serial.println(String("\n > BLE: received plaintext payload: ") + plainPayload.c_str());
 
         // hash and sign message
-        eth_signMessage(plainPayload, false);
+        eth_signMessage(plainPayload);
 
         if (pServer->getConnectedCount() > 0)
         {
@@ -443,7 +439,7 @@ class HashedMessageCallbacks : public NimBLECharacteristicCallbacks
             Serial.println(String("\n > BLE: received hashed payload: ") + hashedPayload.c_str());
 
         // sign hashed message
-        eth_signMessage(hashedPayload, true);
+        eth_signHashedMessage(hashedPayload);
 
         if (pServer->getConnectedCount() > 0)
         {
