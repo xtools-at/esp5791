@@ -23,7 +23,7 @@ The _ESP-5791 project_ complies with the [EIP-5791 standard](https://eips.ethere
 
 - `Arduino` contains the microcontroller software and tweaked libraries to be used with Arduino IDE
 - `hardhat` contains Solidity smart contracts implementing EIP-5791, based on the [PBT](https://github.com/chiru-labs/PBT) project
-- `client` contains a browser based GUI to interact with the hardware using (Web Bluetooth API)[https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API]. Check out the [ESP-5791 GUI on Github Pages](https://xtools-at.github.io/esp5791).
+- `client` contains a browser based GUI to interact with the hardware using [Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API). Check out the [ESP-5791 GUI on Github Pages](https://xtools-at.github.io/esp5791).
 
 ---
 
