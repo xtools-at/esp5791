@@ -103,7 +103,7 @@
       <div class="section">
         <div class="container">
           <br><br>
-          <h1 class="header center-align cyan-text contrast">DIY Physical Backed NFTs</h1>
+          <h1 class="header center-align orange-text contrast">DIY Physical Backed NFTs</h1>
           <div class="row center-align contrast">
             <div class="header h5 col s12">
               EIP-5791 Physical Backed Tokens using ESP32 and BLE
@@ -144,15 +144,14 @@
           how to make this work both on the smart contract- and hardware-side, in a way that it&#39;s safe to use and no one involved in the
           process can cheat. We've implemented this standard using the
           an <a href="https://randomnerdtutorials.com/getting-started-with-esp32" target="_blank" rel="noopener noreferrer"><strong>ESP32</strong></a
-          > microcontroller with <em>Bluetooth Low Energy</em>, a freely available and low-cost development board.
+          > microcontroller with <em>Bluetooth Low Energy</em>, available freely and at low-cost in form of various hardware development boards.
         </p>
-        <p>
-          <a class="right btn-large waves-effect waves-light orange" href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
+        <p class="right-align">
+          <a class="btn-large waves-effect waves-light orange" href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
             ESP-5791 on Github
             <i class="material-icons left">code</i>
           </a>
         </p>
-        <div style="clear:both;margin-bottom:2rem;"></div>
       </div>
     </div>
 
@@ -345,11 +344,11 @@
                     <i class="material-icons left">bluetooth_connected</i>
                   </button></p>
 
-                  <p class="cyan-text">
-                    <div id="js-connect-chipaddress"></div>
-                    <div id="js-connect-signature"></div>
-                    <div id="js-connect-blocknumber"></div>
-                  </p>
+                  <ul class="green-text left-align">
+                    <li class="js-connect-chipaddress truncate"></li>
+                    <li class="js-connect-signature truncate"></li>
+                    <li class="js-connect-blocknumber truncate"></li>
+                  </ul>
                 </div>
               </li>
               <li>
@@ -362,6 +361,10 @@
                     Claim Token
                     <i class="material-icons left">diamond</i>
                   </button></p>
+                  <div class="progress js-claim-progress hide">
+                    <div class="indeterminate"></div>
+                  </div>
+                  <p class="js-claim-success green-text"></p>
                 </div>
               </li>
             </ul>

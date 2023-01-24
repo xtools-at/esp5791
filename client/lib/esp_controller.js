@@ -1,4 +1,4 @@
-const CONTRACT_ADDRESS_DEMO = '0xdAC17F958D2ee523a2206206994597C13D831ec7'; // TODO!!
+const CONTRACT_ADDRESS_DEMO = '0xFAD7EAb70eD7569Aa54AFd7b11Bb376D948b2665';
 const STEP = {
   CHECK_BROWSER: 0,
   CONNECT_WALLET: 1,
@@ -70,8 +70,8 @@ const connectWallet = async (showMessage) => {
     } else {
       if (showMessage) M.toast({text: 'Please confirm the wallet connection request in MetaMask'});
     }
-  } catch(error) {
-    console.log(error);
+  } catch(e) {
+    console.debug(e);
     M.toast({text: 'Error connecting wallet'});
   }
 }
@@ -110,7 +110,9 @@ document.querySelector('.js-connect').addEventListener('click', async event => {
     const account = await eth.getAccount();
     const block = await eth.getBlock();
     if (!account || !block) {
-      M.toast({text: 'Error getting recent block from MetaMask'});
+      M.toast({text: 'Error getting data from MetaMask, check wallet connection'});
+      collapsible.open(STEP.CONNECT_WALLET);
+      return;
     }
     const { number: blockNumber, hash: blockHash } = block;
     const message = account + blockHash.substring(2);
@@ -124,13 +126,13 @@ document.querySelector('.js-connect').addEventListener('click', async event => {
     document.querySelector('.js-connect-chipaddress').innerHTML = `<b>Chip address:</b> ${address}`;
 
     // send message to sign
-    console.log(`Sending message "${message}", waiting for notification callback. Block number is ${blockNumber}.`);
+    // console.log(`Sending message "${message}", waiting for notification callback. Block number is ${blockNumber}.`);
     await ble.write(UUID_INPUT_MESSAGE, message);
 
     // get signature
     await wait(200);
     const signature = await ble.read(UUID_OUTPUT_SIGNATURE);
-    console.log(`Signature retrieved: ${signature}`);
+    // console.log(`Signature retrieved: ${signature}`);
 
     // disconnect BLE
     ble.disconnect();
@@ -142,25 +144,42 @@ document.querySelector('.js-connect').addEventListener('click', async event => {
     state.blockNumber = blockNumber;
 
     M.toast({text: 'Signature generated successfully'});
-    collapsible.open(STEP.CLAIM_TOKEN);
-  } catch(error) {
-    console.log(error);
+    setTimeout(() => collapsible.open(STEP.CLAIM_TOKEN), 3000);
+  } catch(e) {
+    console.debug(e);
   }
 });
 
 // claim token
-document.querySelector('.js-claim').addEventListener('click', event => {
+document.querySelector('.js-claim').addEventListener('click', async event => {
   const { signature, blockNumber, contractAddress } = state;
+
   if (!signature || !blockNumber) {
     M.toast({text: 'No signature found, please sign again'});
     collapsible.open(STEP.GET_SIGNATURE);
+    return;
   }
   if (!contractAddress) {
     M.toast({text: 'No contract address found, please check'});
     collapsible.open(STEP.TOKEN_ADDRESS);
+    return;
   }
 
-  const txResult = eth.transferTokenWithChip(signature, blockNumber, contractAddress);
-  // TODO: success
-  console.log(txResult);
+  const progressBar = document.querySelector('.js-claim-progress');
+  const btn = document.querySelector('.js-claim');
+  btn.disabled = true;
+  progressBar.classList.remove('hide');
+
+  try {
+    const txResult = await eth.transferTokenWithChip(signature, blockNumber, contractAddress);
+    // success
+    console.debug(txResult);
+    M.toast({text: 'NFT has been transferred successfully to your wallet'});
+    document.querySelector('.js-claim-success').innerHTML = `Signature validated, the NFT has been transferred successfully! Check the transaction in your wallet for more details.`
+  } catch (e) {
+    M.toast({text: 'Transaction error or cancelled by user'});
+  }
+
+  btn.disabled = false;
+  progressBar.classList.add('hide');
 });

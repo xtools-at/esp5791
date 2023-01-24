@@ -50,7 +50,7 @@ class EspBLE {
       }
       this.device.addEventListener(this.EVENT_BLE_DEVICE_DISCONNECTED, this.onDisconnected);
     } catch (e) {
-      console.log(e);
+      console.debug(e);
     }
   }
 
@@ -100,7 +100,7 @@ class EspBLE {
   }
 
   onDisconnected() {
-    console.log('Device is disconnected.');
+    console.debug('Device is disconnected.');
     this.device.removeEventListener(this.EVENT_BLE_DEVICE_DISCONNECTED, this.onDisconnected);
   }
 }

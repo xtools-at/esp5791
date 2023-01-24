@@ -23,7 +23,7 @@ The _ESP-5791 project_ complies with the [EIP-5791 standard](https://eips.ethere
 
 - `Arduino` contains the microcontroller software and tweaked libraries to be used with Arduino IDE
 - `hardhat` contains Solidity smart contracts implementing EIP-5791, based on the [PBT](https://github.com/chiru-labs/PBT) project
-- `client` contains a browser based UI to interact with the hardware using (Web Bluetooth API)[https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API]. Check out the [ESP-5791 UI on Github Pages](https://xtools-at.github.io/esp5791).
+- `client` contains a browser based GUI to interact with the hardware using (Web Bluetooth API)[https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API]. Check out the [ESP-5791 GUI on Github Pages](https://xtools-at.github.io/esp5791).
 
 ---
 
@@ -86,7 +86,7 @@ _ESP-5791_ comes with a BLE interface to obtain signatures from the device. The 
   - _write_ a **plaintext message** to `0xB001` or a **keccak256-hashed message** to `0xB002` for the device to sign
   - _read_ the **signature** from `0xC001`. `0xC002` returns the hash of the corresponding prefixed [Ethereum signed message](https://eips.ethereum.org/EIPS/eip-191), `0xC008` gives you the keccak256-hash of the original plaintext message.
 
-You can use the [ESP-5791 UI on Github Pages](https://xtools-at.github.io/esp5791) to interact with your device (source can be found in the `client` folder), or an app like _nRF Connect_ ([mobile](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-mobile)/[desktop](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-desktop)) for more generic testing and debugging.
+You can use the [ESP-5791 GUI on Github Pages](https://xtools-at.github.io/esp5791) to interact with your device (source can be found in the `client` folder), or an app like _nRF Connect_ ([mobile](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-mobile)/[desktop](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-desktop)) for more generic testing and debugging.
 
 ### Signing a message for the PBT smart contract
 
@@ -94,11 +94,11 @@ The message you have to sign on your device for the provided EIP-5791 **PBT smar
 
 - your wallet address (e.g. _0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045_)
 - the blockhash of a **recent** block (e.g. _0x9ad2aa4bdfea57c247ef4202f08b5dec795fa6fb04f94773222b22d18199d9c7_)
-  - look up e.g. on [Etherscan](https://etherscan.io), note down the corresponding block **number** too (our UI takes care of this for you)
+  - look up e.g. on [Etherscan](https://etherscan.io), note down the corresponding block **number** too (our GUI takes care of this for you)
 
 You need to concatenate both these hex strings before signing them. In a simplified scenario, if your wallet would e.g. be _0x42069_ and the blockhash of block #777 is _0xBBBBB_, then your message to sign should look like this: `0x42069BBBBB`. After obtaining the _signature_ from the device, you can call the smart contract like this: `ESP5791.transferTokenWithChip(mySignatureHexString = 0x..., blockNumberUsedInSig = 777)` to claim the connected NFT. Generated signatures expire within 250 blocks.
 
-To edit the provided UI, you'll need to run a server locally, as MetaMask and other wallets don't work locally (i.e. using `file://` protocol). To quickly spin up a dev server, you could use
+To edit the provided GUI, you'll need to run a server locally, as MetaMask and other wallets don't work locally (i.e. using `file://` protocol). To quickly spin up a dev server, you could use
 
 ```bash
 # install server

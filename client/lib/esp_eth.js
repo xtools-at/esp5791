@@ -108,9 +108,10 @@ class EspETH {
     const contract = new ethers.Contract(
       contractAddress,
       pbtAbi,
-      this.web3provider,
+      this.web3provider.getSigner(),
     );
 
-    return contract.transferTokenWithChip(signature, blockNumber, true);
+    const tx = await contract.transferTokenWithChip(signature, blockNumber, true);
+    return tx.wait();
   }
 }
