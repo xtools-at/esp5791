@@ -109,6 +109,10 @@ i.smed {
   font-size: 2.8rem;
 }
 
+.navbar-fixed {
+  z-index: 998;
+}
+
 .sr-only {
   border: 0 !important;
   clip: rect(1px, 1px, 1px, 1px) !important;
