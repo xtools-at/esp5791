@@ -69,6 +69,9 @@ a, .accent {
   .section.pad {
     padding-top: 56px;
   }
+  .center-on-small {
+    text-align: center;
+  }
 }
 
 .page-footer {
@@ -86,6 +89,7 @@ a, .accent {
 
 .secondary {
   color: #757575;
+  font-size: 13px;
 }
 
 .h2 {

@@ -18,8 +18,10 @@ const wait = (ms) => {
 class EspBLE {
   EVENT_BLE_VALUE_CHANGED = 'characteristicvaluechanged';
   EVENT_BLE_DEVICE_DISCONNECTED = 'gattserverdisconnected';
+  EVENT_BLE_ADVERTISEMENT_RECEIVED = 'advertisementreceived';
   encoder = new TextEncoder('utf-8');
   decoder = new TextDecoder('utf-8');
+  scan;
 
   constructor(uuidService) {
     this.device = null;
@@ -102,5 +104,40 @@ class EspBLE {
   onDisconnected() {
     console.debug('Device is disconnected.');
     this.device.removeEventListener(this.EVENT_BLE_DEVICE_DISCONNECTED, this.onDisconnected);
+  }
+
+  async startScan(callback) {
+    try {
+      if (!navigator.bluetooth || !navigator.bluetooth.requestLEScan) {
+        return Promise.reject('Bluetooth scanning not available for this browser')
+      }
+
+      const options = {
+        acceptAllAdvertisements: true,
+      };
+      this.scan = await navigator.bluetooth.requestLEScan(options);
+
+      navigator.bluetooth.addEventListener(this.EVENT_BLE_ADVERTISEMENT_RECEIVED, callback);
+      this.removeScanListener = () => {
+        navigator.bluetooth.removeEventListener(this.EVENT_BLE_ADVERTISEMENT_RECEIVED, callback);
+      }
+
+    } catch(e)  {
+      console.debug(e);
+    }
+  }
+
+  async stopScan() {
+    if (!navigator.bluetooth || !navigator.bluetooth.requestLEScan) {
+      return Promise.reject('Bluetooth scanning not available for this browser')
+    }
+    if (!this.scan || !this.scan.active) {
+      return Promise.reject('Not scanning')
+    }
+    this.scan.stop();
+    if (this.removeScanListener) {
+      this.removeScanListener();
+      this.removeScanListener = null;
+    }
   }
 }

@@ -114,4 +114,18 @@ class EspETH {
     const tx = await contract.transferTokenWithChip(signature, blockNumber, true);
     return tx.wait();
   }
+
+  async switchNetwork(chainId) {
+    try {
+      if (!this.web3provider) {
+        return Promise.reject('No injected wallet found');
+      }
+      await this.web3provider.provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: `0x${Number(chainId || 5).toString(16)}`}],
+      });
+    } catch (e) {
+      console.debug(e);
+    }
+  }
 }
