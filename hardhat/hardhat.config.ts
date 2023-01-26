@@ -1,9 +1,9 @@
 import "@nomicfoundation/hardhat-toolbox";
-import { resolve } from "path";
 import { config as dotenvConfig } from "dotenv";
+import { resolve } from "path";
 
 import "./tasks/accounts";
-import "./tasks/deploy";
+import "./tasks/pbt";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });

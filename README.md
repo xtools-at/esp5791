@@ -1,5 +1,7 @@
 # ESP-5791
 
+![ESP-5791](client/images/feature_graphic vertical.png)
+
 DIY Physical Backed NFTs ([EIP-5791](https://eips.ethereum.org/EIPS/eip-5791)) using ESP32 and BLE
 
 ## Motivation
@@ -98,6 +100,8 @@ The message you have to sign on your device for the provided EIP-5791 **PBT smar
 
 You need to concatenate both these hex strings before signing them. In a simplified scenario, if your wallet would e.g. be _0x42069_ and the blockhash of block #777 is _0xBBBBB_, then your message to sign should look like this: `0x42069BBBBB`. After obtaining the _signature_ from the device, you can call the smart contract like this: `ESP5791.transferTokenWithChip(mySignatureHexString = 0x..., blockNumberUsedInSig = 777)` to claim the connected NFT. Generated signatures expire within 250 blocks.
 
+### Customizing the GUI
+
 To edit the provided GUI, you'll need to run a server locally, as MetaMask and other wallets don't work locally (i.e. using `file://` protocol). To quickly spin up a dev server, you could use
 
 ```bash
@@ -113,9 +117,47 @@ npx http-server
 
 ## _Deploy_ your PBT - the smart contract
 
-See the README in the `hardhat` directory.
+This package includes a ready-to-deploy PBT contract based on [Chiru Labs' PBT implementation](https://github.com/chiru-labs/PBT) and [OpenZeppelin's ERC721 NFT contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) with additional management capabilities. Also check out our [demo contract on Etherscan](https://goerli.etherscan.io/token/0xfad7eab70ed7569aa54afd7b11bb376d948b2665).
 
-This repo does _not_ include packages to generate public **token metadata** or provide respective endpoints for your ERC721 PBT. You can find some inspiration on that topic in my research repo for interactive NFTs [snakes-on-a-chain](https://github.com/deptagency/snakes-on-a-chain).
+The general interaction flow looks like this:
+
+- deploy token contract
+- setup _chip address to token id_ mapping using `seedChipToTokenMapping(address[] chipAddresses, uint256[] tokenIds)`
+- transfer or mint a token with a chip signature using `transferTokenWithChip(bytes signatureFromChip, uint256 blockNumberUsedInSig)`
+
+### Token deployment and management
+
+- switch to `hardhat` directory: `cd hardhat`
+- install dependencies: `yarn`
+- copy `.env.example` to `.env` and put your own values in
+- compile contracts: `yarn compile` or `npx hardhat compile`
+- deploy token contract:
+  `npx hardhat deploy --network goerli --name "My Token" --symbol "ABC" --uri "https://example.com/path-to-token-metadata/"`
+  - if you've changed the contract name, you also need to pass in `--contract MyCustomContract`
+  - use your desired network instead of `goerli`. Check `hardhat.config.ts` for all available network keys
+- (recommended) verify contract source code on Etherscan:
+  `npx hardhat verify --network goerli YOUR_CONTRACT_ADDRESS "My Token" "ABC" "https://example.com/path-to-token-metadata/"`
+  - you need to use the _exact_ same input as when deploying here
+- setup _chip address to token id_ mapping:
+  `npx hardhat seed --network goerli --address YOUR_CONTRACT_ADDRESS --chips "0x123,0x234" --tokenids "1,2"`
+- additional commands to manage the token contract:
+  - transfer or mint a token using a chip signature: `npx hardhat transfer --network goerli --address YOUR_CONTRACT_ADDRESS --signature 0xABC --block 42069`
+  - get token mapping data for a given chip address: `npx hardhat token --network goerli --address YOUR_CONTRACT_ADDRESS --chip 0x123`
+  - add new admin wallet to token contract:
+    `npx hardhat admin --network goerli --address YOUR_CONTRACT_ADDRESS --admin 0x777`
+  - update token metadata uri:
+    `npx hardhat uri --network goerli --address YOUR_CONTRACT_ADDRESS --uri "https://example.com/new-path-to-metadata/"`
+  - replace existing defective chips:
+    `npx hardhat update --network goerli --address YOUR_CONTRACT_ADDRESS --oldchips "0x123,0x234" --newchips "0x888,0x999"`
+
+### Token metadata
+
+This repo does _not_ include packages to generate public **token metadata** or provide respective endpoints for your ERC721 PBT. You can find some inspiration on in my research repo for interactive NFTs [snakes-on-a-chain](https://github.com/deptagency/snakes-on-a-chain), or just make your metadata available as JSON files on a static file host or IPFS. See [here](https://docs.opensea.io/docs/metadata-standards) on more details on the structure of NFT metadata.
+
+### Notes
+
+Hardhat dev environment based on [PaulRBerg's Hardhat Template](https://github.com/paulrberg/hardhat-template), refer to
+that repo's README for specific questions on how to use the tools.
 
 ---
 
