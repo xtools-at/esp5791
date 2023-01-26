@@ -152,7 +152,7 @@ The general interaction flow looks like this:
 
 ### Token metadata
 
-This repo does _not_ include packages to generate public **token metadata** or provide respective endpoints for your ERC721 PBT. You can find some inspiration on in my research repo for interactive NFTs [snakes-on-a-chain](https://github.com/deptagency/snakes-on-a-chain), or just make your metadata available as JSON files on a static file host or IPFS. See [here](https://docs.opensea.io/docs/metadata-standards) on more details on the structure of NFT metadata.
+This repo does _not_ include packages to generate public **token metadata** or provide respective endpoints for your ERC721 PBT. You can find some inspiration on in my research repo for interactive NFTs [snakes-on-a-chain](https://github.com/deptagency/snakes-on-a-chain), or just make your metadata available as JSON files on a static file host or IPFS. See [here](https://docs.opensea.io/docs/metadata-standards) for more details on the structure of NFT metadata.
 
 ### Notes
 
