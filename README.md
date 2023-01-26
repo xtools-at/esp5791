@@ -1,6 +1,6 @@
 # ESP-5791
 
-![ESP-5791](client/images/feature_graphic vertical.png)
+![ESP-5791](client/images/feature_graphic_vertical.png)
 
 DIY Physical Backed NFTs ([EIP-5791](https://eips.ethereum.org/EIPS/eip-5791)) using ESP32 and BLE
 
