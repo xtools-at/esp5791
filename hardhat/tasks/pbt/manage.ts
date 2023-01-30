@@ -29,7 +29,7 @@ task("seed", "adds chipAddress=>tokenId mappings")
     console.table([chipAddresses, tokenIds]);
 
     const tx = await tokenContract.seedChipToTokenMapping(chipAddresses, tokenIds);
-    console.log("Tx submitted, waiting for confirmation...");
+    console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
 
     console.log("Chip addresses seeded successfully!");
@@ -55,7 +55,7 @@ task("update", "remaps chipAddresses (old=>new)")
 
     const tx = await tokenContract.updateChips(oldChips, newChips);
 
-    console.log("Tx submitted, waiting for confirmation...");
+    console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
     console.log("Chip addresses updated successfully!");
   });
@@ -71,7 +71,7 @@ task("admin", "adds a new admin to the token contract")
     const adminRole = await tokenContract.DEFAULT_ADMIN_ROLE();
     const tx = await tokenContract.grantRole(adminRole, tArgs.admin);
 
-    console.log("Tx submitted, waiting for confirmation...");
+    console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
     console.log("New admin set successfully!", tArgs.admin);
   });
@@ -86,7 +86,7 @@ task("uri", "updates the token metadata uri")
 
     const tx = await tokenContract.setBaseURI(tArgs.uri);
 
-    console.log("Tx submitted, waiting for confirmation...");
+    console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
     console.log("New uri set successfully!", tArgs.uri);
   });
@@ -115,7 +115,7 @@ task("transfer", "get mapped token data for chip address")
 
     const tx = await tokenContract["transferTokenWithChip(bytes,uint256,bool)"](tArgs.signature, tArgs.block, true);
 
-    console.log("Tx submitted, waiting for confirmation...");
+    console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
     console.log("Token transferred successfully!", tArgs.uri);
   });
