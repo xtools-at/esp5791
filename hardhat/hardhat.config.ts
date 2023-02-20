@@ -57,6 +57,12 @@ const networks = {
     url: "https://rpc.ankr.com/bsc_testnet_chapel",
     accounts,
   },
+  fantomTestnet: {
+    // fantom testnet
+    chainId: 4002,
+    url: "https://rpc.ankr.com/fantom_testnet",
+    accounts,
+  },
 
   /** public mainnets */
   mainnet: {
@@ -77,6 +83,11 @@ const networks = {
   bsc: {
     chainId: 56,
     url: "https://rpc.ankr.com/bsc",
+    accounts,
+  },
+  fantom: {
+    chainId: 250,
+    url: "https://rpc.ankr.com/fantom",
     accounts,
   },
 };

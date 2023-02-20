@@ -4,7 +4,7 @@ import type { TaskArguments } from "hardhat/types";
 
 import type { ESP5791 } from "../../types/contracts/PBT/ESP5791";
 
-task("seed", "adds chipAddress=>tokenId mappings")
+task("seed", "add chipAddress=>tokenId mappings")
   .addParam("address", "The token contract address")
   .addParam("chips", "Comma-separated list of chip addresses, e.g. '0x0123,0x0234,0x0345'")
   .addParam("tokenids", "Comma-separated list of token ids, e.g. '1,2,3'")
@@ -35,7 +35,7 @@ task("seed", "adds chipAddress=>tokenId mappings")
     console.log("Chip addresses seeded successfully!");
   });
 
-task("update", "remaps chipAddresses (old=>new)")
+task("update", "remap chipAddresses (old=>new)")
   .addParam("address", "The token contract address")
   .addParam("oldchips", "Comma-separated list of chip addresses, e.g. '0x0123,0x0234,0x0345'")
   .addParam("newchips", "Comma-separated list of chip addresses to replace the old ones")
@@ -60,7 +60,7 @@ task("update", "remaps chipAddresses (old=>new)")
     console.log("Chip addresses updated successfully!");
   });
 
-task("admin", "adds a new admin to the token contract")
+task("admin", "add a new admin to the token contract")
   .addParam("address", "The token contract address")
   .addParam("admin", "Address of new (additional) contract admin")
   .setAction(async function (tArgs: TaskArguments, { ethers }) {
@@ -101,10 +101,10 @@ task("token", "get mapped token data for chip address")
 
     const data = await tokenContract.getTokenData(tArgs.chip);
 
-    console.log(`Retrieved data for ${tArgs.chip}:`, JSON.stringify(data));
+    console.log(`Retrieved data for ${tArgs.chip}:`, JSON.stringify(data, null, 2));
   });
 
-task("transfer", "get mapped token data for chip address")
+task("transfer", "transfer token using chip signature")
   .addParam("address", "The token contract address")
   .addParam("signature", "The signature hex-string from the chip")
   .addParam("block", "The block number used in the signature")
@@ -117,5 +117,5 @@ task("transfer", "get mapped token data for chip address")
 
     console.log(`Tx ${tx.hash} submitted, waiting for confirmation...`);
     await tx.wait();
-    console.log("Token transferred successfully!", tArgs.uri);
+    console.log("Token transferred successfully!");
   });
