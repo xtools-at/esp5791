@@ -43,7 +43,28 @@ const pbtAbi = [{
   "outputs": [],
   "stateMutability": "nonpayable",
   "type": "function"
+}, {
+  "inputs": [
+    {
+      "internalType": "address[]",
+      "name": "chipAddresses",
+      "type": "address[]"
+    },
+    {
+      "internalType": "uint256[]",
+      "name": "tokenIds",
+      "type": "uint256[]"
+    }
+  ],
+  "name": "seedChipToTokenMapping",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
 }];
+
+const changeCallback = (ev) => {
+  window && window.location.reload();
+};
 
 class EspETH {
   web3provider;
@@ -56,11 +77,13 @@ class EspETH {
     }
 
     if (this.web3provider) {
-      const changeCallback = () => window && window.location.reload();
-      this.web3provider.provider.on('accountsChanged', changeCallback);
       this.web3provider.provider.on('chainChanged', changeCallback);
       this.web3provider.provider.on('disconnect', changeCallback);
     }
+  }
+
+  setAccountListener() {
+    this.web3provider.provider.on('accountsChanged', changeCallback);
   }
 
   async connect() {
@@ -104,14 +127,25 @@ class EspETH {
     return this.web3provider.getBlock();
   }
 
-  async transferTokenWithChip(signature, blockNumber, contractAddress) {
-    const contract = new ethers.Contract(
+  getContract(contractAddress) {
+    return new ethers.Contract(
       contractAddress,
       pbtAbi,
       this.web3provider.getSigner(),
     );
+  }
+
+  async transferTokenWithChip(signature, blockNumber, contractAddress) {
+    const contract = this.getContract(contractAddress);
 
     const tx = await contract.transferTokenWithChip(signature, blockNumber, true);
+    return tx.wait();
+  }
+
+  async seedChipToTokenMapping(chipAddresses, tokenIds, contractAddress) {
+    const contract = this.getContract(contractAddress);
+
+    const tx = await contract.seedChipToTokenMapping(chipAddresses, tokenIds);
     return tx.wait();
   }
 

@@ -63,6 +63,8 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="#about">About <i class="material-icons left">memory</i></a></li>
             <li><a href="#features">Features <i class="material-icons left">view_in_ar</i></a></li>
+            <li><a href="#contracts">Deploy Token <i class="material-icons left">dataset</i></a></li>
+            <li><a href="#chip">Scan <i class="material-icons left">radar</i></a></li>
             <li><a href="#connect">Connect <i class="material-icons left">bluetooth_connected</i></a></li>
             <li>
               <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">
@@ -79,7 +81,9 @@
             <li class="center-align cyan"><span class="subheader white-text">ESP-5791</span></li>
             <li><a class="sidenav-close" href="#about"><i class="material-icons left">memory</i>About ESP-5791</a></li>
             <li><a class="sidenav-close" href="#features"><i class="material-icons left">view_in_ar</i>Features</a></li>
-            <li><a class="sidenav-close" href="#connect"><i class="material-icons left">bluetooth_connected</i>Connect device</a></li>
+            <li><a class="sidenav-close" href="#contracts"><i class="material-icons left">dataset</i>Deploy Token Contract</a></li>
+            <li><a class="sidenav-close" href="#chip"><i class="material-icons left">radar</i>Scan & Link Chips</a></li>
+            <li><a class="sidenav-close" href="#connect"><i class="material-icons left">bluetooth_connected</i>Connect Chip</a></li>
             <li><div class="divider"></div></li>
             <li class=""><span class="subheader pad">External Links</span></li>
             <li>
@@ -182,7 +186,7 @@
         </p>
 
         <ul class="browser-default">
-          <li>The <strong>ESP32 software</strong>, to be used and flashed with Arduino IDE, to create the hardware</li>
+          <li>The <strong>ESP32 software</strong>, to be used and flashed with Arduino IDE, to create the hardware.</li>
           <li>
             Ready-to-use <strong>smart contracts</strong> with scripts for easy Token deployment and management, and
             a deployed demo Token contract to test your hardware creation with right away.
@@ -261,47 +265,131 @@
       </div>
     </div>
 
-    <div class="container" id="connect">
+    <div class="container" id="contracts">
       <div class="section pad">
         <div class="row">
           <div class="col s12 m4 l4">
             <div class="h2 center-align cyan-text">
-              <i class="medium material-icons">bluetooth_connected</i>
+              <i class="medium material-icons">dataset</i>
             </div>
-            <h2 class="center-align h5">Connect via <i>Web Bluetooth</i></h2>
+            <h2 class="center-align h5">Deploy <i>Token Contract</i></h2>
             <p>
-              Connect to your gadget directly from the browser and
-              get your signature. Works in <b>Chrome on Desktop</b> only.
+              The first step to get your PBT project going. You'll only need your wallet to deploy the smart contract directly from the browser.
             </p>
+            <p class="secondary">
+              Don't have wallet yet? <a href="https://metamask.io/download" target="_blank" rel="noopener noreferrer"
+                >Get MetaMask</a
+              > for Desktop or Mobile.
+            </p>
+          </div>
+
+          <div class="col s12 m8 l8">
+            <ul class="collapsible" id="deployer">
+              <li class="active">
+                <div class="collapsible-header"><i class="material-icons">dataset</i>Deploy PBT Contract</div>
+                <div class="collapsible-body">
+                  <p class="">
+                    First we'll need to deploy a Physical Backed Token to the blockchain. You can use <strong>Remix IDE</strong> with the button below
+                    to deploy your own instance of our ready-made PBT smart contract directly from the browser.
+                  </p>
+
+                  <p class="center-align"><a
+                    class="btn-large waves-effect waves-light orange"
+                    href="https://remix.ethereum.org/?#version=soljson-v0.8.17+commit.8df45f5f&autoCompile=true&code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVA0KcHJhZ21hIHNvbGlkaXR5IF4wLjguMTc7DQoNCmltcG9ydCAiaHR0cHM6Ly9naXRodWIuY29tL3h0b29scy1hdC9lc3A1NzkxL2Jsb2IvbWFpbi9oYXJkaGF0L2NvbnRyYWN0cy9QQlQvRVNQNTc5MS5zb2wiOw0KDQovKioNCiAqIEBkZXYgWW91ciBwZXJzb25hbCBQQlQgY29udHJhY3QsIHJlYWR5IHRvIHVzZSB3aXRoIHRoZSBFU1AtNTc5MSBwcm9qZWN0DQogKi8NCmNvbnRyYWN0IE15UEJUIGlzIEVTUDU3OTEgew0KICAgIGNvbnN0cnVjdG9yKHN0cmluZyBtZW1vcnkgbmFtZSwgc3RyaW5nIG1lbW9yeSBzeW1ib2wsIHN0cmluZyBtZW1vcnkgYmFzZVVSSSkNCiAgICAgICAgRVNQNTc5MShuYW1lLCBzeW1ib2wsIGJhc2VVUkkpIHt9DQp9DQo="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Deploy with Remix
+                    <i class="material-icons left">open_in_new</i>
+                  </a></p>
+
+                  <p class="secondary">
+                    If you prefer to use a local development environment, the <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer"
+                    >ESP-5791 repository</a> contains a complete <strong>Hardhat</strong> project to get you started.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+      <div class="section">
+        <div class="container">
+          <div class="row center-align">
+            <h3 class="col s12 h5 contrast">
+              Ready for your project: chip software, smart contracts and tools.
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg4.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="container" id="chip">
+      <div class="section pad">
+        <div class="row">
+          <div class="col s12 m4 l4">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">radar</i>
+            </div>
+            <h2 class="center-align h5">Scan & Link Chips</i></h2>
             <p>
+              Collect your chips' addresses and link them to the NFTs in your PBT smart contract.
+            </p>
+            <p class="secondary">
               Don't have an <em>ESP-5791</em> device yet? <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer"
                 >Make your own</a
               >, it's free and open source!
             </p>
           </div>
 
-          <div class="col s12 m8 l8 center-align">
-            <ul class="collapsible" id="connector">
+          <div class="col s12 m8 l8">
+            <ul class="collapsible" id="seeder">
               <li class="active">
-                <div class="collapsible-header"><i class="material-icons">safety_check</i>1) Browser Check</div>
-                <div class="collapsible-body center-align">
+                <div class="collapsible-header"><i class="material-icons">radar</i>1) Scan Chip Addresses</div>
+                <div class="collapsible-body">
                   <p class="">
-                    The Web Bluetooth API <i>and</i> Wallets together are only supported in Chrome on Desktop at the
-                    moment. Click the button below to check the browser requirements before you start:
+                    Bulk scan ESP-5791 devices around you and fetch their chip addresses. When prompted, select
+                    a device you want to scan. Click again to scan another device.
                   </p>
-                  <p><button class="js-browser-check btn-large waves-effect waves-light orange">
-                    Check Browser
-                    <i class="material-icons left">safety_check</i>
+
+                  <p class="secondary">
+                    Works in <b>Chrome on Desktop</b> only. Due to limitations with Web Bluetooth, you'll have to
+                    select each device you want to scan individually.
+                  </p>
+
+                  <p class="center-align"><button class="js-seeder-scan btn-large waves-effect waves-light orange">
+                    Scan for devices
+                    <i class="material-icons left">radar</i>
                   </button></p>
+
+                  <div class="input-field center-align">
+                    <textarea id="scan-result" class="materialize-textarea"></textarea>
+                    <label for="scan-result">Scan results</label>
+                    <button class="js-seeder-copy btn btn-abs btn-floating btn-small waves-effect waves-light cyan">
+                      <i class="material-icons">copy_all</i>
+                    </button>
+                  </div>
+
+                  <p class="secondary">
+                    You may skip this step if you're using this tool with hardware other
+                    than <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">ESP-5791</a>, or
+                    prefer to enter your addresses manually in step 4.
+                  </p>
                 </div>
               </li>
               <li>
                 <div class="collapsible-header"><i class="material-icons">wallet</i>2) Connect Wallet</div>
-                <div class="collapsible-body center-align">
+                <div class="collapsible-body">
                   <p class="">
-                    Connect your wallet so we can send your generated signature directly to your selected PBT contract in step 5:
+                    Connect your wallet so you we can link your chip addresses to token ids in step 4:
                   </p>
-                  <p><button class="js-wallet-connect btn-large waves-effect waves-light orange">
+                  <p class="center-align"><button class="js-wallet-connect js-seeder-wallet-connect btn-large waves-effect waves-light orange">
                     Connect Wallet
                     <i class="material-icons left">wallet</i>
                   </button></p>
@@ -309,44 +397,170 @@
               </li>
               <li>
                 <div class="collapsible-header"><i class="material-icons">edit_location</i>3) Token Contract</div>
-                <div class="collapsible-body center-align">
+                <div class="collapsible-body">
+                  <p class="">
+                    Enter the contract address of your deployed PBT contract here:
+                  </p>
+
+                  <div class="input-field center-align">
+                    <i class="material-icons prefix">edit_location</i>
+                    <input id="input-seeder-address" type="text" class="validate" required="true" minlength="42" maxlength="42">
+                    <label for="input-seeder-address">PBT Contract Address (0x...)</label>
+                    <span class="helper-text" data-error="Contract address length mismatch"></span>
+                  </div>
+
+                  <p class="js-token-network secondary"></p>
+
+                  <p class="center-align"><button class="js-seeder-continue btn-large waves-effect waves-light orange">
+                    Save & Continue
+                    <i class="material-icons left">edit_location</i>
+                  </button></p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">dataset_linked</i>4) Link Chip Addresses</div>
+                <div class="collapsible-body">
+                  <p class="">
+                    One last step to go! Assign Token IDs to your Chip addresses in your smart contract here.
+                  </p>
+
+                  <form class="js-seeder-form">
+                    <div class="row mb0" style="position:relative;">
+                      <div class="col s9">
+                        <label>Chip Address</label>
+                      </div>
+                      <div class="col s3">
+                        <label>Token ID</label>
+                      </div>
+                      <button class="js-seeder-add btn btn-abs btn-floating btn-small waves-effect waves-light cyan right">
+                        <i class="material-icons">add</i>
+                      </button>
+                    </div>
+                    <ul class="center-align">
+                      <li class="row mb0 hide">
+                        <div class="input-field col s9">
+                          <input class="validate" type="text" placeholder="0xAbC..." minlength="42" maxlength="42"/>
+                        </div>
+                        <div class="input-field col s3">
+                          <input class="validate" type="number" min="0" step="1"/>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <p class="center-align"><button type="submit" class="js-seeder-link btn-large waves-effect waves-light orange">
+                      Link Chips
+                      <i class="material-icons left">dataset_linked</i>
+                    </button></p>
+                    <div class="progress js-seeder-progress center-align hide">
+                      <div class="indeterminate"></div>
+                    </div>
+                    <p class="js-seeder-success green-text"></p>
+                  </form>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+      <div class="section">
+        <div class="container">
+          <div class="row center-align">
+            <h3 class="col s12 h5 contrast">
+              100% free and open source software (MIT license).
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="parallax">
+        <img src="./images/bg3.jpg" alt="" />
+      </div>
+    </div>
+
+    <div class="container" id="connect">
+      <div class="section pad">
+        <div class="row">
+          <div class="col s12 m4 l4">
+            <div class="h2 center-align cyan-text">
+              <i class="medium material-icons">bluetooth_connected</i>
+            </div>
+            <h2 class="center-align h5">Claim Physical Backed Token</h2>
+            <p>
+              Connect to your gadget directly from the browser via <i>Web Bluetooth</i> and
+              get your signature to claim the connected NFT.
+            </p>
+            <p class="secondary">
+              Don't have an <em>ESP-5791</em> device yet? <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer"
+                >Make your own</a
+              >, it's free and open source!
+            </p>
+          </div>
+
+          <div class="col s12 m8 l8">
+            <ul class="collapsible" id="connector">
+              <li class="active">
+                <div class="collapsible-header"><i class="material-icons">wallet</i>1) Connect Wallet</div>
+                <div class="collapsible-body">
+                  <p class="">
+                    Connect your wallet so we can send your generated signature directly to your selected PBT contract in step 4:
+                  </p>
+                  <p class="center-align"><button class="js-wallet-connect js-sig-wallet-connect btn-large waves-effect waves-light orange">
+                    Connect Wallet
+                    <i class="material-icons left">wallet</i>
+                  </button></p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">edit_location</i>2) Token Contract</div>
+                <div class="collapsible-body">
                   <p class="">
                     Enter the contract address of your PBT contract here:
                   </p>
 
-                  <div class="input-field">
+                  <div class="input-field center-align">
                     <i class="material-icons prefix">edit_location</i>
                     <input id="input-token-address" type="text" class="validate" required="true" minlength="42" maxlength="42">
                     <label for="input-token-address">PBT Contract Address (0x...)</label>
                     <span class="helper-text" data-error="Contract address length mismatch"></span>
                   </div>
 
-                  <p id="js-token-network" class="cyan-text"></p>
+                  <p class="js-token-network secondary"></p>
 
-                  <p><button class="js-token-continue btn-large waves-effect waves-light orange">
-                    Continue
+                  <p class="center-align"><button class="js-token-continue btn-large waves-effect waves-light orange">
+                    Save & Continue
                     <i class="material-icons left">edit_location</i>
                   </button></p>
-                  <div>- or -</div>
-                  <button class="js-token-demo btn waves-effect waves-dark white orange-text">
-                    Use ESP-5791 demo contract*
-                  </button>
-                  <div class="secondary">* (Demo contract is deployed to <b>Goerli testnet</b>)</div>
-
+                  <div class="center-align">- or -</div>
+                  <div class="center-align">
+                    <button class="js-token-demo btn waves-effect waves-dark white orange-text">
+                      Use ESP-5791 demo contract*
+                    </button>
+                  </div>
+                  <div class="secondary center-align">* (Demo contract is deployed to <b>Goerli testnet</b>)</div>
                 </div>
               </li>
               <li>
-                <div class="collapsible-header"><i class="material-icons">verified</i>4) Get Signature</div>
-                <div class="collapsible-body center-align">
+                <div class="collapsible-header"><i class="material-icons">verified</i>3) Get Signature</div>
+                <div class="collapsible-body">
                   <p class="">
-                    Connect to your device via Bluetooth to get a signature:
+                    Connect to your device via Bluetooth to get a recent signature.
                   </p>
-                  <p><button class="js-connect btn-large waves-effect waves-light orange">
+
+                  <p class="center-align"><button class="js-connect btn-large waves-effect waves-light orange">
                     Connect Device
                     <i class="material-icons left">bluetooth_connected</i>
                   </button></p>
 
-                  <ul class="green-text left-align">
+                  <p class="secondary">
+                    Works in <b>Chrome on Desktop</b> only. You may skip this step if you're using this tool with hardware other
+                    than <a href="https://github.com/xtools-at/esp5791" target="_blank" rel="noopener noreferrer">ESP-5791</a>, or
+                    prefer to enter your signature manually.
+                  </p>
+
+                  <ul class="green-text">
                     <li class="js-connect-chipaddress truncate"></li>
                     <li class="js-connect-signature truncate"></li>
                     <li class="js-connect-blocknumber truncate"></li>
@@ -354,16 +568,31 @@
                 </div>
               </li>
               <li>
-                <div class="collapsible-header"><i class="material-icons">diamond</i>5) Claim Token</div>
-                <div class="collapsible-body center-align">
+                <div class="collapsible-header"><i class="material-icons">diamond</i>4) Claim Token</div>
+                <div class="collapsible-body">
                   <p class="">
-                    The final step! Send your signature to the smart contract to transfer the linked PBT into your wallet:
+                    The final step! Send your signature to the smart contract to transfer the linked PBT into your wallet.
                   </p>
-                  <p><button class="js-claim btn-large waves-effect waves-light orange">
-                    Claim Token
-                    <i class="material-icons left">diamond</i>
-                  </button></p>
-                  <div class="progress js-claim-progress hide">
+
+                  <form class="center-align">
+                    <div class="row">
+                      <div class="input-field col s8">
+                        <input placeholder="0xAbC..." id="input-signature" class="validate" type="text" required minlength="132" maxlength="132">
+                        <label for="input-signature">Signature</label>
+                      </div>
+                      <div class="input-field col s4">
+                        <input placeholder="256128" id="input-blockno" class="validate" type="number" required min="1" step="1">
+                        <label for="input-blockno">Block No.</label>
+                      </div>
+                    </div>
+
+                    <p class="center-align"><button type="submit" class="js-claim btn-large waves-effect waves-light orange">
+                      Claim Token
+                      <i class="material-icons left">diamond</i>
+                    </button></p>
+                  </form>
+
+                  <div class="progress js-claim-progress center-align hide">
                     <div class="indeterminate"></div>
                   </div>
                   <p class="js-claim-success green-text"></p>

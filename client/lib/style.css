@@ -20,6 +20,10 @@ a, .accent {
   height: auto;
 }
 
+nav ul.right i.left {
+  margin-right: 5px;
+}
+
 .parallax-container {
   min-height: 380px;
   line-height: 0;
@@ -41,6 +45,20 @@ a, .accent {
 
 .section.pad {
   padding-top: 64px;
+}
+
+.row.mb0 {
+  margin-bottom: 0;
+}
+.row.mb0 .input-field {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.btn.btn-abs {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 @media only screen and (max-width: 992px) {
